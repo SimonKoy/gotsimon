@@ -5,3 +5,5 @@ I am a songwriter whose passion for poetry and lyrical storytelling has found ne
 Please feel free to contact me and share your thoughts or possibly a request a song written for you.
 
 Thank you for listening and supporting independent artistry.
+
+EXAMPLE
