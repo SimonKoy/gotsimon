@@ -1,0 +1,198 @@
+<style>
+
+<!-- =========================================================
+     POLISHED DARK THEME STYLES
+     Edit colors in :root to change site palette
+========================================================= -->
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --wave-color: #00c3ff;
+}
+ :root{
+    --bg:#0f0f14;
+    --card:#1a1a22;
+    --accent:#7b4dff;
+    --accent-light:#b388ff;
+    --text:#b9ccf3;
+    --muted:#aaa;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+a{
+    color:#a48ee0; /* Default link color */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold;
+    transition: color 0.3s ease; /* Smooth color change */
+}
+
+/* Hover Effect */
+a:hover{
+    color: #ff6600; /* Change color on hover */
+    text-decoration: none; /* Add underline on hover */
+}
+
+/* Active/visited states */
+a:visited {
+    color: #6a5c77; /* Purple for visited links */
+}
+
+/* Smooth scrolling for internal anchors */
+html {
+scroll-behavior: smooth;
+}
+
+
+body::after{
+    content:"© 2025-2026 Simon Koyounian — All Rights Reserved";
+    position:fixed;
+    bottom:10px;
+    right:10px;
+    font-size:15px;
+    opacity:0.4;
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:40px 20px 20px;
+    font-size:28px;
+    font-weight:600;
+    letter-spacing:1px;
+    color: #a48ee0;/*added from other index*/
+}
+
+/* SECTION WRAPPER */
+section{
+    max-width:1000px;
+    margin:40px auto;
+    padding:20px;
+}
+
+/* CARD STYLE */
+.card{
+    background:var(--card);
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* SEARCH BAR */
+#searchBar{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-bottom:25px;
+    font-size:16px;
+}
+
+/* SONG CARD */
+.song-card{
+    background:#12141a;
+    margin-bottom:25px;
+    padding:20px;
+    border-radius:12px;
+}
+
+.song-header{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.song-thumb{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.song-title{
+    font-size:18px;
+    font-weight:600;
+}
+
+.song-card.active{
+    border:1px solid #8a5cff;
+    box-shadow:0 0 25px rgba(138,92,255,0.4);
+    transition:all 0.4s ease;
+}
+
+canvas{
+    width:100%;
+    height:80px;
+    margin-top:12px;
+    border-radius:8px;
+}
+
+audio{
+    width:100%;
+    margin-top:10px;
+}
+
+/* ===================================
+LYRIC EFFECT 
+===================================*/
+.lyrics{
+    margin-top:15px;
+    height:160px;
+    overflow-y:auto;
+    background:#0f1116;
+    padding:12px;
+    border-radius:8px;
+    font-size:14px;
+    line-height:1.6;
+}
+
+/*
+.lyric-line {
+    opacity: 0.35;
+    transform: scale(0.98);
+    transition: 
+        opacity 0.5s ease,
+        transform 0.4s ease,
+        color 0.4s ease;
+}  */
+  .lyric-line {
+    opacity: 0.35;
+    transform: scale(0.98);
+    transform-origin: left center; /* <-- ADD THIS */
+    transition: 
+        opacity 0.5s ease,
+        transform 0.4s ease,
+        color 0.4s ease;
+}
+
+.lyric-line.active {
+    opacity: 1;
+    transform: scale(1.05);
+    color: #00c3ff;
+   text-shadow: 0 0 10px #00c3ff;
+}
+
+
+/* CONTACT */
+.contact a{
+    color:var(--accent);
+    text-decoration:none;
+}
+
+
+footer{
+    text-align:center;
+    padding:30px;
+    font-size:13px;
+    color:var(--muted);
+}
+
+</style>
