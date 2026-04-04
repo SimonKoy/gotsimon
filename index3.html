@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simon Koyounian | Music Bible + Songs with Lyrics</title>
+<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+<link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Listen to inspiring Christian theme songs and daily living songs with synchronized lyrics. A clean music player featuring Bible-based songs, uplifting messages, and easy navigation.">
+
+<meta name="keywords" content="Daily living songs,Christian music, Bible songs, Christian lyrics, Bible teachings, faith music, scripture songs">
+
+<meta name="author" content="Simon Koyounian">
+
+<meta name="robots" content="index, follow">
+
+
+
+
+
+</head>
+<body>
+
+<header><img src="images/ChatGPT Image Mar 30, 2026, Header.png" alt="Logo for GotSimon" width="60%" height="100%">
+    <!--<img src="images/logo.png" alt="Logo for GotSimon" width="200px" height="100%">--> <br> <h2>Simon Koyounian | GotSimon</h2></header>
+<section><p>Page 3</p>
+    Page Navigation:
+    <a href="index.html">1</a> <span style="color:#05d8fd">|</span> <a href="index2.html">2</a> <span style="color:#05d8fd">|</span> <a href="#page3">3</a> <span style="color:#05d8fd">|</span> <a href="#page4">4</a> <span style="color:#05d8fd">|</span> <a href="#page5">5</a> <span style="color:#05d8fd">|</span> <a href="#page6">6</a> <span style="color:#05d8fd">|</span> <a href="#page7">7</a> <span style="color:#05d8fd">|</span> <a href="#page8">8</a> <span style="color:#05d8fd">|</span> <a href="#page9">9</a> <span style="color:#05d8fd">|</span> <a href="#page10">10</a>
+</section>
+
+<section>
+<div><p style="color:#ec01ec; text-align:left; letter-spacing: 0.01em;">Song List:</p>
+<p style="color:#3a7de2; text-align:left; letter-spacing: 0.01em;">
+Winter Breeze <span style="color:#05d8fd">|</span> 
+Our Beautiful Planet <span style="color:#05d8fd">|</span>
+Poisoned Thorns <span style="color:#05d8fd">|</span> 
+Invisible <span style="color:#05d8fd">|</span> 
+Hope Found <span style="color:#05d8fd">|</span> 
+Shadow of The Tower <span style="color:#05d8fd">|</span>
+Final Judgement <span style="color:#05d8fd">|</span> 
+Step In Step <span style="color:#05d8fd">|</span> 
+<br><br>
+God's Mercy <span style="color:#05d8fd">|</span> 
+Looking For Trouble <span style="color:#05d8fd">|</span> 
+Lack of Sight <span style="color:#05d8fd">|</span> 
+Rainbow's Promise <span style="color:#05d8fd">|</span>
+War's End <span style="color:#05d8fd">|</span> 
+Pray With Me <span style="color:#05d8fd">|</span>
+Lazarus <span style="color:#05d8fd">|</span>
+As Long As You Live <span style="color:#05d8fd">|</span>
+<br><br>
+Victory Song <span style="color:#05d8fd">|</span>
+Loves Path <span style="color:#05d8fd">|</span>
+God's Mercy <span style="color:#05d8fd">|</span>
+Love's Path <span style="color:#05d8fd">|</span>
+The Onion of Us <span style="color:#05d8fd">|</span>
+Morning Star <span style="color:#05d8fd">|</span>
+Do You Remember? <span style="color:#05d8fd">|</span>
+New Age <span style="color:#05d8fd">|</span>
+<br><br>
+Seeking Your Light <span style="color:#05d8fd">|</span>
+Where Is Your Line? <span style="color:#05d8fd">|</span>
+A Better Tomorrow <span style="color:#05d8fd">|</span>
+Crimson Red <span style="color:#05d8fd">|</span>
+Words of Life <span style="color:#05d8fd">|</span>
+<br>
+<br>
+<span style="color:#737274">return for more content</span>
+</p>
+
+</div>
+</section>
+
+<!-- =========================================================
+     MUSIC SECTION
+========================================================= -->
+<section>
+
+<input type="text" id="searchBar" placeholder="Search songs...">
+
+<div id="playlist"></div>
+
+</section>
+
+
+<footer>
+© 2025 Simon Koyounian — Independent Music
+</footer>
+
+<script>
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let currentAudio = null;
+let audioPlayers = [];
+let autoAdvanceTimer = null;
+let playlistStarted = false;
+
+/* =========================================================
+   SONG DATABASE
+   Add unlimited songs here.
+========================================================= */
+
+const songs = [
+{
+title:"Victory Song",
+artist:"Simon Koyounian",
+thumbnail:"images/VictorySong.jpg",
+audio:"audio/Victory Song - By GotSimon©2026SimonKoyounian.mp3",
+lyrics:`
+[00:06] oh, oh, oh, oh, oh, oh
+[00:13] As clouds clear and dust begins to thin
+[00:19] Amid the rubble traces of a battle held within
+[00:24] Shapes begin to emerge from the darkness of smoke
+
+[00:36] People they gather in joyful song
+[00:41] Singing together as one united throng
+[00:46] Their salvation revealed no more an oppressive world
+[00:52] Under the enemy rule seemingly timelessly unfurled
+[00:57] God's name, its meaning he has now fully shown
+[01:03] The awaited sanctification of Jehovah’s name now made known
+
+[01:16] Come all sing our new victory song – the new world is here
+[01:21] Mankind no longer has cause to fear drawing out a painful tear
+[01:25] Jehovah’s name is finally sanctified for all time anew
+[01:31] While the new scrolls are open for me and you
+[01:37] Perfect worship now our God we can give
+
+[01:43] Entering a new era - the earth is made clean
+[01:46] Joyously learning new ways on how to live their days
+[01:49] While animals and people true peace they embrace
+[01:52] As time progressed a beautiful paradise the earth became
+[01:58] Finally, the earth Jehovah did fully reclaim
+
+[02:00] Come sing your new song Jehovah’s world is new
+[02:05] Jehovah’s name is -- (Jehovah’s name is now sanctified for all time)
+[02:11] The new scrolls are open for me and you
+[02:17] Perfect worship that lasts - our God we can give
+
+[02:23] Soon as life begins to blossom God his power did use
+[02:29] The promised resurrection of the dead their hope realized
+[02:34] Awakening them from sleep to give them their prize
+[02:40] Gaining Jehovah’s favour each day, united they serve
+[02:45] Promising their love never to swerve
+[02:51] Now 1,000 years have passed before them all
+[02:54] Meeting the final challenge of integrity leading to life eternally.
+
+[03:02] Come sing your new song Jehovah’s world is new
+[03:08] Jehovah’s name now sanctified for all time
+[03:13] The new scrolls are open for me and you
+[03:19] Perfect worship that lasts - our God we can give
+
+[03:25] Come sing your new song the paradise is here
+[03:31] Jehovah’s name now sanctified for all time
+[03:36] The new scrolls are open for me and you
+[03:42] Perfect worship that lasts --- our God we can give
+`
+},
+
+{
+title:"Love's Path",
+artist:"Simon Koyounian",
+thumbnail:"images/LovesPath.jpg",
+audio:"audio/Love's Path - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:01] As we go through life full of troubles and strife
+[00:06] These vanish in the light of our love
+[00:12] Showing our love's path to a better tomorrow?
+[00:18] Where our lives will forever be full of love -- and peace
+
+[00:23] Together we conquer (conquer) any trials we meet (trials we meet)
+[00:28] With our love forever guiding our way,
+[00:32] With you by my side, whatever may follow ---
+[00:38] We can greet the morning dawn - ever strong!
+
+[00:45] As years pass by for both you and me
+[00:50] Our love’s path will forever last
+[00:56] Sharing our love that's deeper than the sea (the sea).
+[01:01] Looking ahead we find our way
+[01:03] Following any path our love paves the way
+
+[01:07] Together we conquer any trials we meet
+[01:12] With our love forever guiding our way,
+[01:16] With you by my side, whatever may follow ---
+[01:22] We can greet the morning dawn - ever strong!
+
+[01:27] United we remain relying on our love every day
+[01:30] Trusting each other with a love we continually express
+[01:33] Always looking for it to bless.
+[01:36] Sharing our love so true - that it daily does renew (new, new)
+
+[01:42] Together we conquer (together we conquer) any trials we meet (any trials we meet)
+[01:47] With our love forever guiding our way, (guiding our way)
+[01:52] With you by my side, (ooo) whatever may follow (ooo)
+[01:58] We can greet the morning dawn - ever strong!
+
+[02:03] United we remain relying on our love every day
+[02:05] Trusting each other with a love we continually express
+[02:09] Always looking for it to bless.
+[02:12] Sharing our love so true - that it daily does renew (new new) with our love.
+
+[02:18] Together we conquer (together we conquer) any trials we meet (any trials we meet)
+[02:24] With our love forever guiding our way, (guiding our way)
+[02:27] With you by my side, (ooo)  whatever may follow (ooo) 
+[02:33] We can greet the morning dawn - ever strong!
+
+[02:39] United we conquer regardless what comes
+[02:44] Hand in hand each step we take
+[02:49] With you by my side (side), whatever may follow (follow)
+[02:55] We can greet the morning dawn - ever strong!
+
+[03:00] Traveling love’s path to meet the rising sun
+[03:05] As its light guides our way, yes with each morning’s light
+[03:11] Yes, always walking together towards the new dawn in sight.
+[03:16] Our hearts entwined together -- as one
+[03:23] Hand in hand each step we take
+
+[03:27] With you by my side, (ooo)  whatever may follow (ooo)
+[03:33] We can greet the morning dawn - ever strong
+[03:38] Our hearts entwined together -- as one
+[03:44] Hand in hand each step we take
+[03:46] With you by my side,
+[03:49] With our love what we can do.
+`
+},
+
+<!-- The onion of Us -->
+
+
+{
+title:"Morning Star",
+artist:"Simon Koyounian",
+thumbnail:"images/Morning Star.jpg",
+audio:"audio/Morningstar_ByGotSimon©2026SimonKoyounian.mp3",
+lyrics:`
+[00:00] Cries are heard both night and day
+[00:10] Looking for the way
+
+[00:17] Around the world cries of anguish echo
+[00:20] Tossed about like the roaring sea - never calm days do they see
+[00:26] like ships without anchors they toss - (never able to navigate their way)
+[00:31] Darkness shrouds the light of a hopeful way
+[00:35] Difficult times are here today – (yes times are hard)
+[00:39] Needing a light some hope and pray
+[00:42] The long awaited dark last days are truly here
+
+[00:48] Holding my head up high, I look toward the sky
+[00:53] Knowing my help will come from on high
+[00:58] As the Morning star begins to rise dawning a new day
+[01:04] Pathing the way for a life of love and peace to stay
+[01:12] Replacing a dark heart with hope and light
+[01:17] God’s Kingdom is here with all its might
+
+[01:22] Persuing pleasure and following greed
+[01:25] Violence everywhere is what they continually feed
+[01:28] Now is the time! Do you see the light?
+[01:31] Mankind's rule is now nearing flight
+[01:36] Amid the flash of the morning stars glorious might
+
+[01:39] Holding my head up high, I look toward the sky
+[01:44] Knowing my help will come from on high
+[01:49] As the Morning star begins to rise dawning a new day
+[01:55] Pathing the way for a life of love and peace to stay
+[02:02] Replacing a dark heart with hope and light
+[02:08] God’s Kingdom is here with all its might
+
+[02:13] From the east - (for all to see) the time will be clear
+[02:16] The end of this wicked world is near
+[02:19] An end to darkness and fear
+[02:23] Yes, before the sunrise the Morning star does appear.
+`
+},
+
+{
+title:"Do You Remember?",
+artist:"Simon Koyounian",
+thumbnail:"images/DoYouRemember.jpeg",
+audio:"audio/Do You Remember_ By GotSimon©2026Simon Koyounian.mp3",
+lyrics:`
+"[00:00] As the sun warms the earth,
+"[00:04] While birds fly - soaring high - giving flight,
+"[00:08] His paradise earth is now before God’s sight,
+"[00:14] 1,000 years as a memory has passed
+"[00:18] Perfect life is finally here yes forever too last
+"[00:22] Ohhhh ohh ohh - the glorious freedom of the Sons of God we gladly enjoy
+
+"[00:30] Hearing the voice of our father - Our Heavenly Father in the gentle breeze
+"[00:36] As he lovingly provides all that we please
+
+"[00:40] Do you remember when the old world passed away?
+"[00:44] Did you see God’s angels on Jehovah’s Great Day?
+"[00:47] When all that was bad vanished, no more to stay?
+"[00:51] Tell me please, oh please, your story -
+"[00:53] Yes, (please tell me) – yes tell me (yes tell me) -
+"[01:00] Your story about that great and holy day!
+
+"[01:07] Animals and man living together without fear
+"[01:11] The wolf the lamb the lion and the bull
+"[01:14] Each together lay, oh forever more (yes) in peace year after year
+"[01:20] Those who were asleep in death now standing near
+
+"[01:23] Our friends, and our loved ones, with us eternally
+"[01:28] When death is no more for you and me
+
+"[01:33] Praise our God! for Jehovah has seen
+"[01:36] To appoint us a redeemer, and a loving King.
+"[01:39] Jesus was the means to save Jehovah’s creation
+"[01:42] Leaving no room for a life of sinful inclination
+"[01:45] Now! the king Jesus oh to his God he has given,
+"[01:49] His continued full submission. while standing in his station
+"[01:53] Ooo oo ooo oo ooo
+
+"[01:58] Do you remember when - Do you remember when the old world passed away?
+"[02:03] Did you see God’s angels on Jehovah’s Great Day?
+"[02:06] When all that was bad vanished, no more to stay?
+"[02:09] Tell me please, oh please, your story -
+"[02:12] Yes, please tell me – yes tell me - (yes tell me)
+"[02:19] Your story about that great and holy day!
+
+
+"[02:24] Yes, tell me now please, do you remember Jehovah’s glory?
+"[02:31] When all was changed and God his glory did fully display!
+"[02:38] No. Oh no more will there ever be a rebel
+"[02:41] Jehovah’s rule to ever spurn!
+"[02:45] The accuser has had his time, removed forever never to return
+
+"[02:51] Jehovah God’s Sovereign rule and his dominion will stay
+"[02:58] As on the mountain tops -- the grain will overflow
+"[03:04] And like the days of a tree will God’s people be
+"[03:08] Thriving under Jehovah’s rule eternally
+"[03:11] Till the moon is no more our voices we raise,
+"[03:17] Oh, oh (oh, oh, oh) oh, oh, oh, oh, (Oh, oh, oh,) oh, oh, oh, (Oh, oh, oh,)
+"[03:27] Jehovah our God, to you we will continually to praise.
+"[03:32] Oh, oh (oh, oh, oh) oh, oh, oh, oh, (Oh, oh, oh,) praise oh, Oh, oh, oh"
+`
+},
+
+{
+title:"Where Is Your Line?",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/TheLine.jpeg",
+audio:"audio/Where Is Your Line - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:00] Where is your line (the line)
+[00:07] Where is it?
+
+[00:11] Where – oh where --- is the line, that you will cross?
+[00:18] Is it far or near?
+[00:21] Is it blurry or clear?
+[00:24] Please tell me about the line.
+[00:29] Your answer I want to hear.
+
+[00:38] When pressures upon you arise, 
+[00:42] Will you stand by your line?
+[00:45] Stand -- come what may?
+[00:49] Will you run and abandon your conviction?
+[00:54] Only you can say.
+
+[01:00] Many are the challenges today (each and every day)
+[01:08] As pressures and troubles continue to dismay
+[01:13] Looking around some compromise,
+[01:18] Yet, where do you stand this day?
+
+[01:26] When pressures upon you arise
+[01:30] Will you stand by your line?
+[01:33] Stand -- come what may?
+[01:37] Will you run and abandon your conviction?
+[01:42] Only you can say. Only you can say.
+
+[02:01] When pressures upon you arise
+[02:06] Will you stand by your line?
+[02:09] Stand -- come what may?
+[02:13] Will you run and abandon yourself?
+[02:17] Or will you clearly say - - - 
+[02:23] This is where I will stay!
+
+[02:26] (Yes - -) This is where I will stay!
+[02:33] (Yes - -) This is where I will always stay.
+[02:39] (Yes - -)
+[02:41] (Yes - -)
+[02:43] Where I
+[02:45] (Yes --)
+[02:48] I will always stay...
+`
+},
+
+
+{
+title:"Crimson Red",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/CrimsonRed.jpg",
+audio:"audio/Crimson Red-ByGotSimon ©2026 Simon Koyounian.mp3",
+lyrics:`
+[00:00] The fall into sin's error mankind was hurled
+[00:07] Missing the mark of man’s purpose by God did prevail
+
+[00:16] Saddened at heart for man’s plight Jehovah did reveal
+[00:23] His purpose for the way man’s friendship to renew
+[00:30] Removing error and sinfulness from his view
+[00:37] Taking steps salvation he would give
+[00:44] God’s most precious love – (his only-begotten Son) his treasure Jehovah would provide
+
+[00:54] Crimson red for forgiveness flows
+[00:58] Blotting sins errors that continually grows
+[01:01] Glory to Jehovah for his mercy to extend
+[01:05] Looking for a way our relationship to mend
+[01:08] Jesus has died for both you and me
+[01:15] Opening the door for life eternally
+
+[01:21] Knowing our wages for sin in death we would pay
+[01:28] Using the light of your love you always display
+[01:35] Drawing us closer to your son to stay
+[01:41] Realizing this world cannot provide what we need.
+[01:49] A ransom you provided for lives to save
+
+[01:56] Crimson red for forgiveness flows
+[01:59] Blotting sins errors that continually grows
+[02:03] Glory to Jehovah for his mercy to extend
+[02:06] Looking for a way our relationship to mend
+[02:10] Jesus has died for both you and me
+[02:17] Opening the door for life eternally
+
+[02:23] Look! The Lamb of God impaled before all to see (for all to see)
+[02:31] Christ his life he gave willingly
+[02:37] Remember the sacrifice that Jesus had made
+[02:46] The blood of Jehovah’s son (poured out) in your behalf
+[02:53] Opening the door for life eternally
+`
+},
+
+
+{
+title:"Words of Life",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/WordsOfLife.jpg",
+audio:"audio/Words of Life-By GotSimon ©2026 Simon Koyounian.mp3",
+lyrics:`
+[00:02] hummm, ohhh 
+[00:12] A whisper of a syllable, a letter is formed
+[00:18] During silence it awakens as words are breathed to life
+[00:25] Giving birth to direction and purpose now born
+
+[00:34] Expressions of thoughts and feelings awaken
+[00:39] As imagination and reality merge in ways not mistaken
+[00:47] Light floods the scene where all is serene
+[00:51] Flashes go forth as power in wisdom is seen
+
+[00:58] Words spoken with love -- intertwined
+[01:05] Never empty or hollow their sound will you find
+[01:12] Providing deep feelings that appeal
+[01:19] It is not the words that are heard and remembered
+[01:25] But emotions and feelings that are felt and real
+
+[01:34] Loyal love in faithfulness continually shows
+[01:40] As wisdom’s works continually grows
+[01:47] Soon others appear by wisdom's side
+[01:52] Unitedly reflecting life’s light where shadows do not hide
+
+[02:00] Words spoken with love together intertwined
+[02:07] Never empty or hollow their sound will you find (will you find)
+[02:14] Providing deep feelings that appeal
+[02:21] It is not the words that are heard and remembered
+[02:27] But emotions and feelings that are felt and real
+
+[02:34] Words and thoughts --- emotions reveal
+[02:41] Refusing to doubt God’s love that you feel
+[02:47] When a single syllable the word of love toward you is eternal and real
+[03:02] Growing each moment, as syllables expand
+[03:08] Love is the source of all life in Jehovah’s gracious -- hand.
+`
+},
+
+
+];
+
+/* =========================================================
+   BUILD PLAYLIST
+========================================================= */
+
+const playlist = document.getElementById("playlist");
+
+songs.forEach((song,index)=>createSongCard(song,index));
+
+function createSongCard(song,index){
+
+    const card=document.createElement("div");
+    card.className="song-card";
+
+    // ✅ IMPORTANT: give each card a unique ID
+    card.id="song"+index;
+
+    card.innerHTML=`
+    <div class="song-header">
+        <img src="${song.thumbnail}" class="song-thumb">
+        <div>
+            <div class="song-title">${song.title}</div>
+            <div>${song.artist}</div>
+        </div>
+    </div>
+
+    <canvas id="wave${index}"></canvas>
+
+    <audio controls preload="none" controlsList="nodownload" id="audio${index}">
+        <source src="${song.audio}" type="audio/mpeg">
+    </audio>
+
+    <div class="lyrics" id="lyrics${index}"></div>
+    `;
+
+    playlist.appendChild(card);
+
+    const audio=document.getElementById("audio"+index);
+    audioPlayers.push(audio);
+
+    setupAudio(audio,index,song.lyrics);
+}
+/*==========================================================
+CENTER SONG WHEN IT PLAYS
+=========================================================*/
+/* =========================================================
+   CENTER ACTIVE SONG IN VIEWPORT
+========================================================= */
+
+function centerSongByIndex(index){
+
+    const card = document.getElementById("song"+index);
+
+    if(!card) return; // safety check
+
+    const rect = card.getBoundingClientRect();
+
+    // Calculate position so card lands centered vertically
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    const cardTop = rect.top + scrollTop;
+    const cardHeight = rect.height;
+    const viewportHeight = window.innerHeight;
+
+    const centerPosition =
+        cardTop - (viewportHeight/2) + (cardHeight/2);
+
+    window.scrollTo({
+        top: centerPosition,
+        behavior: "smooth"
+    });
+
+    // Optional: highlight active card
+    document.querySelectorAll(".song-card")
+        .forEach(c => c.classList.remove("active"));
+
+    card.classList.add("active");
+}
+
+/* =========================================================
+   AUDIO + AUTO ADVANCE + LOOP ONE FULL PLAYLIST CYCLE
+========================================================= */
+
+function setupAudio(audio,index,lyricsText){
+
+    const canvas=document.getElementById("wave"+index);
+    const ctx=canvas.getContext("2d");
+
+    const audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const analyser=audioCtx.createAnalyser();
+    const source=audioCtx.createMediaElementSource(audio);
+
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    analyser.fftSize=256;
+
+    const bufferLength=analyser.frequencyBinCount;
+    const dataArray=new Uint8Array(bufferLength);
+
+    function draw(){
+        requestAnimationFrame(draw);
+        analyser.getByteFrequencyData(dataArray);
+        ctx.fillStyle="#12141a";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        const barWidth=canvas.width/bufferLength;
+        for(let i=0;i<bufferLength;i++){
+            const barHeight=dataArray[i]/2;
+            ctx.fillStyle="#8a5cff";
+            ctx.fillRect(i*barWidth,canvas.height-barHeight,barWidth,barHeight);
+        }
+    }
+    draw(
+        function drawWaveform(analyser, dataArray, canvas, ctx){
+
+    const bufferLength = analyser.fftSize;
+    analyser.getByteTimeDomainData(dataArray);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Animate gradient position
+    const time = Date.now() * 0.002;
+    const gradientShift = Math.sin(time) * canvas.width * 0.5;
+
+    const gradient = ctx.createLinearGradient(
+        0 + gradientShift,
+        0,
+        canvas.width + gradientShift,
+        0
+    );
+
+    gradient.addColorStop(0, "#00c3ff");
+    gradient.addColorStop(0.5, "#7b2cff");
+    gradient.addColorStop(1, "#00c3ff");
+
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    const sliceWidth = canvas.width / bufferLength;
+    let x = 0;
+
+    for(let i = 0; i < bufferLength; i++){
+
+        const v = dataArray[i] / 128.0;
+        const y = v * canvas.height / 2;
+
+        if(i === 0){
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+
+        x += sliceWidth;
+    }
+
+    ctx.lineTo(canvas.width, canvas.height / 2);
+    ctx.stroke();
+
+    requestAnimationFrame(() =>
+        drawWaveform(analyser, dataArray, canvas, ctx)
+    );
+}
+    );
+
+    audio.addEventListener("play",()=>{
+
+    if(autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+
+    if(currentAudio && currentAudio!==audio){
+        currentAudio.pause();
+    }
+
+    currentAudio=audio;
+    audioCtx.resume();
+    playlistStarted=true;
+
+    // ✅ Center the active song
+    centerSongByIndex(index);
+});
+
+    audio.addEventListener("ended",()=>{
+        const currentIndex=audioPlayers.indexOf(audio);
+
+        if(currentIndex<audioPlayers.length-1){
+            autoAdvanceTimer=setTimeout(()=>{
+                audioPlayers[currentIndex+1].play();
+            },2000);
+        }else if(playlistStarted){
+            // LOOP FULL PLAYLIST ONE TIME
+            autoAdvanceTimer=setTimeout(()=>{
+                audioPlayers[0].play();
+            },2000);
+            playlistStarted=false;
+        }
+    });
+
+    setupLyrics(audio,index,lyricsText);
+}
+
+/* =========================================================
+   LYRICS SYNC
+========================================================= */
+
+function setupLyrics(audio, index, text){
+
+    const container = document.getElementById("lyrics"+index);
+    container.innerHTML = "";
+
+    const lines = text.split("\n").filter(l => l.trim() !== "");
+
+    const parsed = [];
+
+    lines.forEach(line => {
+
+        const match = line.match(/\[(\d+):(\d+)\](.*)/);
+
+        if(match){
+            const min = parseInt(match[1]);
+            const sec = parseInt(match[2]);
+            const time = min * 60 + sec;
+
+            parsed.push({
+                time: time,
+                text: match[3].trim()
+            });
+        }
+    });
+
+    // SORT in case timestamps ever out of order
+    parsed.sort((a,b)=>a.time-b.time);
+
+    parsed.forEach(obj=>{
+        const div = document.createElement("div");
+        div.className = "lyric-line";
+        /* div.textContent = obj.text; */
+        div.innerHTML = `<span class="lyric-text">${obj.text}</span>`;
+        container.appendChild(div);
+        obj.element = div;
+    });
+
+    let currentIndex = -1;
+
+    // OPTIONAL: adjust if lyrics appear early or late
+    const syncOffset = 0; 
+    // Example: -0.5 (if lyrics late)
+    // Example: +0.5 (if lyrics early)
+
+    audio.addEventListener("timeupdate", ()=>{
+
+        const currentTime = audio.currentTime + syncOffset;
+
+        // Find active lyric
+        for(let i=0; i<parsed.length; i++){
+
+            if(
+                currentTime >= parsed[i].time &&
+                (i === parsed.length - 1 || currentTime < parsed[i+1].time)
+            ){
+
+                if(currentIndex !== i){
+
+                    if(currentIndex >= 0){
+                        parsed[currentIndex].element.classList.remove("active");
+                    }
+
+                    parsed[i].element.classList.add("active");
+                    currentIndex = i;
+
+                    // Accurate center scroll
+                    const containerRect = container.getBoundingClientRect();
+                    const lineRect = parsed[i].element.getBoundingClientRect();
+
+                    const offset = lineRect.top - containerRect.top;
+
+                    container.scrollTo({
+                        top: container.scrollTop + offset - container.clientHeight / 2,
+                        behavior: "smooth"
+                    });
+                }
+
+                break;
+            }
+        }
+
+    });
+}
+
+/* =========================================================
+   SEARCH FILTER
+========================================================= */
+
+document.getElementById("searchBar").addEventListener("input",function(){
+    const value=this.value.toLowerCase();
+    document.querySelectorAll(".song-card").forEach(card=>{
+        card.style.display=card.innerText.toLowerCase().includes(value)
+            ? "block" : "none";
+    });
+});
+
+</script>
+<!--  
+=====================
+ANCHOR FOR NEXT PAGE
+=====================
+<section>
+    <p style="text-align:center; color:#00c3ff">1. <a href="index2.html"> 2.</a></p>
+</section>
+-->
+</body>
+</html>
