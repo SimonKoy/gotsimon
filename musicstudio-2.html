@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- =====================================================
+SEO + META
+===================================================== -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Simon Koyounian | AI Song Collection</title>
+
+<meta name="description" content="Original songs written by Simon Koyounian and brought to life using AI. Stream music, follow lyrics, and share songs.">
+
+<link rel="icon" href="images/favicon.ico">
+
+<meta property="og:title" content="Simon Koyounian AI Songs">
+<meta property="og:description" content="Original lyrics expressed through AI-generated music.">
+<meta property="og:image" content="images/featured.jpg">
+
+<!-- HLS STREAMING LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<style>
+
+/* =====================================================
+GLOBAL THEME (PURPLE + BLUE)
+===================================================== */
+
+:root{
+--bg:#0a0a18;
+--purple:#7a2cff;
+--blue:#3ab0ff;
+--card:#14142a;
+--text:#fff;
+}
+
+body{
+margin:0;
+font-family:Segoe UI, Arial;
+background:radial-gradient(circle at top,#1b0f3a,#050510);
+color:var(--text);
+}
+
+/* =====================================================
+NAVIGATION
+===================================================== */
+
+nav{
+display:flex;
+justify-content:space-between;
+padding:15px 25px;
+background:#050510;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+nav a{
+color:#aaa;
+margin-left:15px;
+text-decoration:none;
+}
+
+/* =====================================================
+HERO
+===================================================== */
+
+.hero{
+height:300px;
+background:url("images/featured.jpg") center/cover;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+box-shadow:inset 0 0 100px rgba(0,0,0,0.7);
+}
+
+.hero h1{
+font-size:40px;
+text-shadow:0 0 15px var(--purple);
+}
+
+.controls{
+margin-top:15px;
+display:flex;
+gap:10px;
+}
+
+input,select{
+padding:8px;
+border-radius:6px;
+border:none;
+}
+
+/* =====================================================
+STICKY PLAYER
+===================================================== */
+
+#playerBar{
+position:sticky;
+top:60px;
+background:#050510;
+padding:10px;
+z-index:999;
+}
+
+/* waveform progress bar */
+.wave{
+height:6px;
+background:#222;
+margin-top:8px;
+position:relative;
+}
+
+.wave-progress{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,var(--purple),var(--blue));
+}
+
+/* =====================================================
+SONG CARD
+===================================================== */
+
+.song-card{
+display:flex;
+gap:15px;
+background:var(--card);
+margin:20px;
+padding:15px;
+border-radius:10px;
+}
+
+.song-thumb{
+width:120px;
+height:120px;
+object-fit:cover;
+}
+
+button{
+margin:4px;
+}
+
+/* =====================================================
+LYRICS
+===================================================== */
+
+.lyrics{
+height:200px;
+overflow-y:auto;
+background:#000;
+padding:10px;
+}
+
+.lyric-line{
+opacity:.4;
+}
+
+.active{
+color:var(--blue);
+opacity:1;
+text-shadow:0 0 8px var(--blue);
+}
+
+/* =====================================================
+SECTIONS
+===================================================== */
+
+section{
+padding:40px;
+max-width:900px;
+margin:auto;
+}
+
+footer{
+text-align:center;
+padding:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+NAV BAR
+===================================================== -->
+
+<nav>
+<div>Simon Koyounian</div>
+<div>
+<a href="#playlist">Music</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</div>
+</nav>
+
+<!-- =====================================================
+HERO SECTION
+===================================================== -->
+
+<div class="hero">
+
+<h1>AI Song Collection</h1>
+
+<div class="controls">
+<input id="searchBar" placeholder="Search songs">
+<select id="songList"><option>Jump to song</option></select>
+</div>
+
+</div>
+
+<!-- =====================================================
+PLAYER
+===================================================== -->
+
+<div id="playerBar">
+
+<audio id="player" controls></audio>
+
+<div class="wave">
+<div class="wave-progress" id="waveProgress"></div>
+</div>
+
+</div>
+
+<!-- =====================================================
+PLAYLIST
+===================================================== -->
+
+<div id="playlist"></div>
+
+<!-- =====================================================
+ABOUT
+===================================================== -->
+
+<section id="about">
+<h2>About</h2>
+<p>
+I am Simon Koyounian. I enjoy writing poetry and songs.
+With AI, my words can now be heard as music.
+</p>
+</section>
+
+<!-- =====================================================
+CONTACT
+===================================================== -->
+
+<section id="contact">
+<h2>Contact</h2>
+<p>Email: your@email.com</p>
+</section>
+
+<footer>
+All songs ©2025-2026 Simon Koyounian
+</footer>
+
+<script>
+
+/* =====================================================
+SONG DATA (EDIT HERE)
+Use .m3u8 for streaming OR .mp3 for basic use
+===================================================== */
+
+const songs = [
+
+/* NEW SONG AT TOP ###################################*/
+{
+title:"Goliath",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/Goliath.jpg",
+audio:"audio/Goliath-By GotSimon-©2026 SimonKoyounian.mp3",
+lyrics:`
+[00:12] Pounding in your ear the feeling is so clear
+[00:18] Beats increasing revealing fear
+[00:24] As a shadowy cloud blocks the light of day
+[00:31] Emotions flood as feelings lose their way
+
+[00:39] Facing your fears you try your best
+[00:42] Hoping within that you pass the test
+[00:45] As tidal waves wash upon your path
+[00:49] Looking for a lifeboat to survive the storms wrath
+[00:53] Knowing that love will anchor you at shore
+[00:56] Grasping love’s hand as never before
+[01:00] Hoping this day will be a victory day
+[01:03] Yes your Goliath will fall today
+
+[01:11] Familiarity, with feelings of fear
+[01:18] Anxieties they grow with each emotional tear
+[01:25] Quivering lips as silent words reveal
+[01:31] Your faith in God’s loving hand you feel
+[01:37] Like a stone cast towards its foe
+[01:42] Delivering a fatal blow
+
+[01:46] Facing your fears you try your best
+[01:49] Hoping within that you pass the test
+[01:52] As tidal waves wash upon your path
+[01:56] Looking for a lifeboat to survive the storms wrath
+[02:00] Knowing that love will anchor you at shore
+[02:03] Grasping love’s hand as never before
+[02:06] Hoping this day will be a victory day
+[02:09] Yes your Goliath will fall today (oh oh oh oh)
+[02:17] Using God’s love will help you stand tall
+
+[02:27] Trembling at man anxiety expands
+[02:30] Shaking all over even your hands
+[02:33] Only to subside when control you feel
+[02:36] And feeling the love that is true and real
+[02:39] Yes stand erect Knowing you conquered today
+[02:46] Throwing down your Goliath from on high to slay
+
+[02:53] Looking for a lifeboat to survive the storms wrath
+[02:59] Knowing that love will anchor you at shore
+[03:02] Grasping love’s hand as never before
+[03:06] Hoping this day will be a victory day
+[03:09] Your fear to slay
+`
+},
+
+{
+title:"Words of Life",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/WordsOfLife.jpg",
+audio:"audio/Words of Life-By GotSimon ©2026 Simon Koyounian.mp3",
+lyrics:`
+[00:02] hummm, ohhh 
+[00:12] A whisper of a syllable, a letter is formed
+[00:18] During silence it awakens as words are breathed to life
+[00:25] Giving birth to direction and purpose now born
+
+[00:34] Expressions of thoughts and feelings awaken
+[00:39] As imagination and reality merge in ways not mistaken
+[00:47] Light floods the scene where all is serene
+[00:51] Flashes go forth as power in wisdom is seen
+
+[00:58] Words spoken with love -- intertwined
+[01:05] Never empty or hollow their sound will you find
+[01:12] Providing deep feelings that appeal
+[01:19] It is not the words that are heard and remembered
+[01:25] But emotions and feelings that are felt and real
+
+[01:34] Loyal love in faithfulness continually shows
+[01:40] As wisdom’s works continually grows
+[01:47] Soon others appear by wisdom's side
+[01:52] Unitedly reflecting life’s light where shadows do not hide
+
+[02:00] Words spoken with love together intertwined
+[02:07] Never empty or hollow their sound will you find (will you find)
+[02:14] Providing deep feelings that appeal
+[02:21] It is not the words that are heard and remembered
+[02:27] But emotions and feelings that are felt and real
+
+[02:34] Words and thoughts --- emotions reveal
+[02:41] Refusing to doubt God’s love that you feel
+[02:47] When a single syllable the word of love toward you is eternal and real
+[03:02] Growing each moment, as syllables expand
+[03:08] Love is the source of all life in Jehovah’s gracious -- hand.
+`
+},
+
+
+{
+title:"Crimson Red",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/CrimsonRed.jpg",
+audio:"audio/Crimson Red-ByGotSimon ©2026 Simon Koyounian.mp3",
+lyrics:`
+[00:00] The fall into sin's error mankind was hurled
+[00:07] Missing the mark of man’s purpose by God did prevail
+
+[00:16] Saddened at heart for man’s plight Jehovah did reveal
+[00:23] His purpose for the way man’s friendship to renew
+[00:30] Removing error and sinfulness from his view
+[00:37] Taking steps salvation he would give
+[00:44] God’s most precious love – (his only-begotten Son) his treasure Jehovah would provide
+
+[00:54] Crimson red for forgiveness flows
+[00:58] Blotting sins errors that continually grows
+[01:01] Glory to Jehovah for his mercy to extend
+[01:05] Looking for a way our relationship to mend
+[01:08] Jesus has died for both you and me
+[01:15] Opening the door for life eternally
+
+[01:21] Knowing our wages for sin in death we would pay
+[01:28] Using the light of your love you always display
+[01:35] Drawing us closer to your son to stay
+[01:41] Realizing this world cannot provide what we need.
+[01:49] A ransom you provided for lives to save
+
+[01:56] Crimson red for forgiveness flows
+[01:59] Blotting sins errors that continually grows
+[02:03] Glory to Jehovah for his mercy to extend
+[02:06] Looking for a way our relationship to mend
+[02:10] Jesus has died for both you and me
+[02:17] Opening the door for life eternally
+
+[02:23] Look! The Lamb of God impaled before all to see (for all to see)
+[02:31] Christ his life he gave willingly
+[02:37] Remember the sacrifice that Jesus had made
+[02:46] The blood of Jehovah’s son (poured out) in your behalf
+[02:53] Opening the door for life eternally
+`
+},
+
+{
+title:"Where Is Your Line?",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/TheLine.jpeg",
+audio:"audio/Where Is Your Line - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:00] Where is your line (the line)
+[00:07] Where is it?
+
+[00:11] Where – oh where --- is the line, that you will cross?
+[00:18] Is it far or near?
+[00:21] Is it blurry or clear?
+[00:24] Please tell me about the line.
+[00:29] Your answer I want to hear.
+
+[00:38] When pressures upon you arise, 
+[00:42] Will you stand by your line?
+[00:45] Stand -- come what may?
+[00:49] Will you run and abandon your conviction?
+[00:54] Only you can say.
+
+[01:00] Many are the challenges today (each and every day)
+[01:08] As pressures and troubles continue to dismay
+[01:13] Looking around some compromise,
+[01:18] Yet, where do you stand this day?
+
+[01:26] When pressures upon you arise
+[01:30] Will you stand by your line?
+[01:33] Stand -- come what may?
+[01:37] Will you run and abandon your conviction?
+[01:42] Only you can say. Only you can say.
+
+[02:01] When pressures upon you arise
+[02:06] Will you stand by your line?
+[02:09] Stand -- come what may?
+[02:13] Will you run and abandon yourself?
+[02:17] Or will you clearly say - - - 
+[02:23] This is where I will stay!
+
+[02:26] (Yes - -) This is where I will stay!
+[02:33] (Yes - -) This is where I will always stay.
+[02:39] (Yes - -)
+[02:41] (Yes - -)
+[02:43] Where I
+[02:45] (Yes --)
+[02:48] I will always stay...
+`
+},
+
+{
+title:"Do You Remember?",
+artist:"Simon Koyounian",
+thumbnail:"images/DoYouRemember.jpeg",
+audio:"audio/Do You Remember_ By GotSimon©2026Simon Koyounian.mp3",
+lyrics:`
+"[00:00] As the sun warms the earth,
+"[00:04] While birds fly - soaring high - giving flight,
+"[00:08] His paradise earth is now before God’s sight,
+"[00:14] 1,000 years as a memory has passed
+"[00:18] Perfect life is finally here yes forever too last
+"[00:22] Ohhhh ohh ohh - the glorious freedom of the Sons of God we gladly enjoy
+
+"[00:30] Hearing the voice of our father - Our Heavenly Father in the gentle breeze
+"[00:36] As he lovingly provides all that we please
+
+"[00:40] Do you remember when the old world passed away?
+"[00:44] Did you see God’s angels on Jehovah’s Great Day?
+"[00:47] When all that was bad vanished, no more to stay?
+"[00:51] Tell me please, oh please, your story -
+"[00:53] Yes, (please tell me) – yes tell me (yes tell me) -
+"[01:00] Your story about that great and holy day!
+
+"[01:07] Animals and man living together without fear
+"[01:11] The wolf the lamb the lion and the bull
+"[01:14] Each together lay, oh forever more (yes) in peace year after year
+"[01:20] Those who were asleep in death now standing near
+
+"[01:23] Our friends, and our loved ones, with us eternally
+"[01:28] When death is no more for you and me
+
+"[01:33] Praise our God! for Jehovah has seen
+"[01:36] To appoint us a redeemer, and a loving King.
+"[01:39] Jesus was the means to save Jehovah’s creation
+"[01:42] Leaving no room for a life of sinful inclination
+"[01:45] Now! the king Jesus oh to his God he has given,
+"[01:49] His continued full submission. while standing in his station
+"[01:53] Ooo oo ooo oo ooo
+
+"[01:58] Do you remember when - Do you remember when the old world passed away?
+"[02:03] Did you see God’s angels on Jehovah’s Great Day?
+"[02:06] When all that was bad vanished, no more to stay?
+"[02:09] Tell me please, oh please, your story -
+"[02:12] Yes, please tell me – yes tell me - (yes tell me)
+"[02:19] Your story about that great and holy day!
+
+
+"[02:24] Yes, tell me now please, do you remember Jehovah’s glory?
+"[02:31] When all was changed and God his glory did fully display!
+"[02:38] No. Oh no more will there ever be a rebel
+"[02:41] Jehovah’s rule to ever spurn!
+"[02:45] The accuser has had his time, removed forever never to return
+
+"[02:51] Jehovah God’s Sovereign rule and his dominion will stay
+"[02:58] As on the mountain tops -- the grain will overflow
+"[03:04] And like the days of a tree will God’s people be
+"[03:08] Thriving under Jehovah’s rule eternally
+"[03:11] Till the moon is no more our voices we raise,
+"[03:17] Oh, oh (oh, oh, oh) oh, oh, oh, oh, (Oh, oh, oh,) oh, oh, oh, (Oh, oh, oh,)
+"[03:27] Jehovah our God, to you we will continually to praise.
+"[03:32] Oh, oh (oh, oh, oh) oh, oh, oh, oh, (Oh, oh, oh,) praise oh, Oh, oh, oh"
+`
+},
+
+
+{
+title:"Morning Star",
+artist:"Simon Koyounian",
+thumbnail:"images/Morning Star.jpg",
+audio:"audio/Morningstar_ByGotSimon©2026SimonKoyounian.mp3",
+lyrics:`
+[00:00] Cries are heard both night and day
+[00:10] Looking for the way
+
+[00:17] Around the world cries of anguish echo
+[00:20] Tossed about like the roaring sea - never calm days do they see
+[00:26] like ships without anchors they toss - (never able to navigate their way)
+[00:31] Darkness shrouds the light of a hopeful way
+[00:35] Difficult times are here today – (yes times are hard)
+[00:39] Needing a light some hope and pray
+[00:42] The long awaited dark last days are truly here
+
+[00:48] Holding my head up high, I look toward the sky
+[00:53] Knowing my help will come from on high
+[00:58] As the Morning star begins to rise dawning a new day
+[01:04] Pathing the way for a life of love and peace to stay
+[01:12] Replacing a dark heart with hope and light
+[01:17] God’s Kingdom is here with all its might
+
+[01:22] Persuing pleasure and following greed
+[01:25] Violence everywhere is what they continually feed
+[01:28] Now is the time! Do you see the light?
+[01:31] Mankind's rule is now nearing flight
+[01:36] Amid the flash of the morning stars glorious might
+
+[01:39] Holding my head up high, I look toward the sky
+[01:44] Knowing my help will come from on high
+[01:49] As the Morning star begins to rise dawning a new day
+[01:55] Pathing the way for a life of love and peace to stay
+[02:02] Replacing a dark heart with hope and light
+[02:08] God’s Kingdom is here with all its might
+
+[02:13] From the east - (for all to see) the time will be clear
+[02:16] The end of this wicked world is near
+[02:19] An end to darkness and fear
+[02:23] Yes, before the sunrise the Morning star does appear.
+`
+},
+
+{
+title:"Love's Path",
+artist:"Simon Koyounian",
+thumbnail:"images/LovesPath.jpg",
+audio:"audio/Love's Path - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:01] As we go through life full of troubles and strife
+[00:06] These vanish in the light of our love
+[00:12] Showing our love's path to a better tomorrow?
+[00:18] Where our lives will forever be full of love -- and peace
+
+[00:23] Together we conquer (conquer) any trials we meet (trials we meet)
+[00:28] With our love forever guiding our way,
+[00:32] With you by my side, whatever may follow ---
+[00:38] We can greet the morning dawn - ever strong!
+
+[00:45] As years pass by for both you and me
+[00:50] Our love’s path will forever last
+[00:56] Sharing our love that's deeper than the sea (the sea).
+[01:01] Looking ahead we find our way
+[01:03] Following any path our love paves the way
+
+[01:07] Together we conquer any trials we meet
+[01:12] With our love forever guiding our way,
+[01:16] With you by my side, whatever may follow ---
+[01:22] We can greet the morning dawn - ever strong!
+
+[01:27] United we remain relying on our love every day
+[01:30] Trusting each other with a love we continually express
+[01:33] Always looking for it to bless.
+[01:36] Sharing our love so true - that it daily does renew (new, new)
+
+[01:42] Together we conquer (together we conquer) any trials we meet (any trials we meet)
+[01:47] With our love forever guiding our way, (guiding our way)
+[01:52] With you by my side, (ooo) whatever may follow (ooo)
+[01:58] We can greet the morning dawn - ever strong!
+
+[02:03] United we remain relying on our love every day
+[02:05] Trusting each other with a love we continually express
+[02:09] Always looking for it to bless.
+[02:12] Sharing our love so true - that it daily does renew (new new) with our love.
+
+[02:18] Together we conquer (together we conquer) any trials we meet (any trials we meet)
+[02:24] With our love forever guiding our way, (guiding our way)
+[02:27] With you by my side, (ooo)  whatever may follow (ooo) 
+[02:33] We can greet the morning dawn - ever strong!
+
+[02:39] United we conquer regardless what comes
+[02:44] Hand in hand each step we take
+[02:49] With you by my side (side), whatever may follow (follow)
+[02:55] We can greet the morning dawn - ever strong!
+
+[03:00] Traveling love’s path to meet the rising sun
+[03:05] As its light guides our way, yes with each morning’s light
+[03:11] Yes, always walking together towards the new dawn in sight.
+[03:16] Our hearts entwined together -- as one
+[03:23] Hand in hand each step we take
+
+[03:27] With you by my side, (ooo)  whatever may follow (ooo)
+[03:33] We can greet the morning dawn - ever strong
+[03:38] Our hearts entwined together -- as one
+[03:44] Hand in hand each step we take
+[03:46] With you by my side,
+[03:49] With our love what we can do.
+`
+},
+
+{
+title:"The Onion of Us",
+artist:"Simon Koyounian",
+thumbnail:"images/TheOnionOfUs.jpeg",
+audio:"audio/The Onion of Us - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:02] Ooohhh, oohh, oohhh
+[00:00] Can you see --- can you see me?
+[00:00] Connected - beyond seemingly belief
+[00:00] Many are the layers that I feel
+[00:00] Yes, like an onion ready to peel
+
+[00:00] If you could see the depth of me
+[00:00] The person that I used to be ----
+[00:00] A lifetime so long ago,
+[00:00] Would you look at me differently?
+[00:00] Or patiently say – I love you so.
+
+[00:00] If you could see depth of me
+[00:00] Peeling back layers of a lifetime ago,
+[00:00] Oh, past days we can see.
+[00:00] Memories kept hidden from the bright light of day
+[00:00] Yes, like deep (oh deep) layers hidden away
+
+[00:00] If you peeled at me, what would you see?
+[00:00] Would there still be room for you and me?
+[00:00] Or would you throw it all away?
+[00:00] Forgetting the layer before you today?
+
+[00:00] For fear of hurt holding ourselves at bay
+[00:00] Trying slowly – yes, trying to show the person within
+[00:00] Like pages that unfurl read like a book
+[00:00] The many layers the stories they tell
+[00:00] Freely now flowing like a brook.
+
+[00:00] If you peeled at me, what would you see?
+[00:00] Would there still be room for you and me?
+[00:00] Or would you throw it all away?
+[00:00] Forgetting the layer before you today?
+
+[00:00] My heart of the onion you hold in your hand
+[00:00] Exposing myself layers I expand
+[00:00] Seeing me yes, the person inside
+[00:00] Trusting our love, there is nowhere to hide.
+
+[00:00] If you peeled at me, what would you see?
+[00:00] Would there still be room for you and me?
+[00:00] Or would you throw it all away?
+[00:00] Forgetting the layer before you today?
+
+[00:00] If you peeled at me, what would you see?
+[00:00] Would there still be room for you and me?
+[00:00] Or would you throw it all away?
+[00:00] Forgetting the layer before you today?
+[00:00] Forgetting the layer before you today?
+
+[00:00] The time when our layers like onions we became
+[00:00] Sharing our deep layers.
+[00:00] Opening the onion that is us
+[00:00] Trusting yes, ever trusting our love to remain.
+`
+},
+
+
+{
+title:"Victory Song",
+artist:"Simon Koyounian",
+thumbnail:"images/VictorySong.jpg",
+audio:"audio/Victory Song - By GotSimon©2026SimonKoyounian.mp3",
+lyrics:`
+[00:06] oh, oh, oh, oh, oh, oh
+[00:13] As clouds clear and dust begins to thin
+[00:19] Amid the rubble traces of a battle held within
+[00:24] Shapes begin to emerge from the darkness of smoke
+
+[00:36] People they gather in joyful song
+[00:41] Singing together as one united throng
+[00:46] Their salvation revealed no more an oppressive world
+[00:52] Under the enemy rule seemingly timelessly unfurled
+[00:57] God's name, its meaning he has now fully shown
+[01:03] The awaited sanctification of Jehovah’s name now made known
+
+[01:16] Come all sing our new victory song – the new world is here
+[01:21] Mankind no longer has cause to fear drawing out a painful tear
+[01:25] Jehovah’s name is finally sanctified for all time anew
+[01:31] While the new scrolls are open for me and you
+[01:37] Perfect worship now our God we can give
+
+[01:43] Entering a new era - the earth is made clean
+[01:46] Joyously learning new ways on how to live their days
+[01:49] While animals and people true peace they embrace
+[01:52] As time progressed a beautiful paradise the earth became
+[01:58] Finally, the earth Jehovah did fully reclaim
+
+[02:00] Come sing your new song Jehovah’s world is new
+[02:05] Jehovah’s name is -- (Jehovah’s name is now sanctified for all time)
+[02:11] The new scrolls are open for me and you
+[02:17] Perfect worship that lasts - our God we can give
+
+[02:23] Soon as life begins to blossom God his power did use
+[02:29] The promised resurrection of the dead their hope realized
+[02:34] Awakening them from sleep to give them their prize
+[02:40] Gaining Jehovah’s favour each day, united they serve
+[02:45] Promising their love never to swerve
+[02:51] Now 1,000 years have passed before them all
+[02:54] Meeting the final challenge of integrity leading to life eternally.
+
+[03:02] Come sing your new song Jehovah’s world is new
+[03:08] Jehovah’s name now sanctified for all time
+[03:13] The new scrolls are open for me and you
+[03:19] Perfect worship that lasts - our God we can give
+
+[03:25] Come sing your new song the paradise is here
+[03:31] Jehovah’s name now sanctified for all time
+[03:36] The new scrolls are open for me and you
+[03:42] Perfect worship that lasts --- our God we can give
+`
+},
+
+{
+title:"As Long As You Live",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/AsLongAsYouLive.jpg",
+audio:"audio/As Long As You Live.mp3",
+lyrics:`
+[00:14] When I am lost in my thoughts
+[00:18] And disquieting images come to my mind.
+[00:26] I find myself inclined to look towards your light and pray
+[00:32] Remember your servant this day
+[00:35] As your eyes rove about you see
+[00:39] The many ways that you can help me.
+
+[00:44] Your love so pure it embraces me
+[00:48] A warmth that replaces my tears of sorrow
+[00:51] Bringing to mind thoughts of a beautiful tomorrow.
+[00:58] When life will be more than I can imagine
+[01:01] A time to run and leap for joy
+[01:05] No more will my heart be filled with sorrow
+
+[01:11] Oh Jehovah - my God I pray
+[01:16] Even when I am laid low, I know where you are
+[01:22] Never far you tightly hold my hand
+[01:26] Always here to comfort me
+[01:30] Forever by my side you promise to stay.
+
+[01:40] Yes, Jehovah I know your promise.
+[01:44] Your unfailing true companionship in loyal love you give
+[01:51] Never will you forget my devotion as long as you live
+[02:00] Continue to carry me on the wings of an eagle
+[02:04] As my strength you daily renew!
+
+[02:07] As I rely on your strong arm of salvation
+[02:11] My heart will always be bonded to you
+[02:14] May your wondrous Spirit cause me to become
+[02:18] What I need for this day
+
+[02:23] Oh Jehovah - my God I pray
+[02:28] Even when I am laid low, I know where you are
+[02:34] Never far you tightly hold my hand
+[02:39] Always here to comfort me
+[02:42] Forever by my side you promise to stay.
+
+[02:51] Oh Jehovah - my God I pray
+[02:55] Even when I am laid low, I know where you are
+[03:01] Never far you tightly hold my hand
+[03:33] Always here to comfort me
+[03:37] Forever by my side you promise to stay
+
+[03:44] Never will you forget my devotion as long as you live
+[03:53] Yes, my God remember me this day.
+`
+},
+
+{
+title:"Lazarus",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/Lazarus.jpeg",
+audio:"audio/Lazarus - By GotSimon ©2026 Simon Koyounian.mp3",
+lyrics:`
+[00:06] (ooh ooh ooh ooh ooh)
+[00:12] A message from Bethany there came to be
+[00:18] Lord come and see! Please see our brother, we plea!
+[00:24] May you lay your hand upon his brow we pray
+[00:31] And please come, please heal Lazarus today.
+
+[00:37] Jesus would not go near but stayed away
+[00:42] Waiting for the time God’s wondrous glory to display
+[00:49] Lazarus our friend has fallen asleep
+[00:54] Let us go to awaken him from his sleep so deep
+
+[01:01] Yes! One day the time will be realized
+[01:05] When all in the memorial tombs will rise
+[01:09] From their deep sleep they will awaken
+[01:11] By the voice of Christ Jesus, the memorial tombs will be shaken
+[01:15] The righteous yes - and the unrighteous will stand
+[01:18] This is what Jehovah God has planned
+[01:22] Paradise on earth all will see, living forever in harmony
+
+[01:29] Seeing Jesus coming Martha in tears ran to him
+[01:35] “Lord, if you had been here, my brother would not have died.”
+[01:41] His tears welling up and groaning deep inside
+[01:45] The Lord Jesus gave way and cried -
+
+[01:48] Yes! One day the time will be realized
+[01:52] When all in the memorial tombs will rise
+[01:55] From their deep sleep they will awaken
+[01:57] By the voice of Christ Jesus, the memorial tombs will be shaken
+[02:02] The righteous yes - and the unrighteous will stand
+[02:05] This is what Jehovah God has planned
+[02:08] Paradise on earth all will see, living forever in harmony
+
+[02:15] Where is his tomb that you have sealed?
+[02:21] Roll the rock aside and Jehovah’s power will be revealed
+[02:27] Calling out Lazarus’ name for all to hear
+[02:31] Bound with cloths from his tomb he did appear
+[02:35] The crowds were struck with awe and reverential fear
+[02:40] This Lazarus again stood!
+
+[02:46] Yes! One day the time will be realized
+[02:50] When all in the memorial tombs will rise
+[02:53] From their deep sleep they will awaken
+[02:56] By the voice of Christ Jesus, the memorial tombs will be shaken
+[03:00] The righteous yes - and the unrighteous will stand
+[03:03] This is what Jehovah God has planned
+[03:06] Paradise on earth all will see, living forever in harmony
+
+[03:12] Yes, yes - never more will those living be taken
+[03:17] When those who are in asleep in death will awaken
+[03:20] To join our hearts with eternal joyous praise
+[03:26] Because God remembers their days
+
+[03:29] Yes! One day the time will be realized
+[03:33] When all in the memorial tombs will rise
+[03:36] From their deep sleep they will awaken
+[03:38] By the voice of Christ Jesus, the memorial tombs will be shaken
+[03:42] The righteous yes - and the unrighteous will stand
+[03:45] This is what Jehovah God has planned
+
+[03:48] Jehovah our God worthy of praise
+[03:53] He desires to bring our loved back to live endless days
+[03:59] Even more than a tree will all our lives forever be...
+`
+},
+
+{
+title:"Pray With Me",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/PrayWithMe.jpg",
+audio:"audio/Pray with Me - By GotSimon@2026 Simon Koyounian.mp3",
+lyrics:`
+[00:00] When I close my eyes to what I see  
+[00:06] I think of a better tomorrow  
+[00:11] And wonder about a wondrous thing for you and me.  
+
+[00:17] Pray with me, Oh - Pray with me.  
+[00:22] Our Father (Jehovah) listens to our plea  
+[00:27] Pray with me - Ohhh pray with me 
+[00:32] Our Father in the heavens, let your name be sanctified.  
+[00:38] Let your Kingdom come. – yes, come now we pray  
+[00:44] Amen come Lord Jesus our King lead the way! 
+
+[00:53] What happens when you close your eyes?  
+[00:55] Does your imagination fly to a time without any sorrow?  
+[01:02] Where life has changed in every way  
+[01:06] When our children no longer fear to play  
+[01:12] When peace prevails every day.  
+
+[01:14] God opens his hand and satisfies  
+[01:16] Our deep desires he provides  
+[01:19] When those who have fallen asleep in death awaken  
+[01:23] To join our hearts in eternal joyous praise  
+[01:27] Because he remembered their days  
+
+[01:31] Pray with me, Oh - Pray with me.  
+[01:35] Our Father (Jehovah) listens to our plea  
+[01:41] Pray with me - Ohhh pray with me 
+[01:46] Our Father in the heavens, let your name be sanctified.  
+[01:52] Let your Kingdom come. – yes, come now we pray  
+[01:58] Amen come Lord Jesus our King lead the way! 
+
+[02:05] Yes! We will find joy in the near future tomorrow!  
+[02:11] These promises God made to end our sorrow  
+[02:17] When we will finally see  
+[02:19] A world made for people just like you and me  
+[02:26] Pray with me, Oh - Pray with me -  
+[02:32] Amen come Lord Jesus our King lead the way 
+[02:40] (Lord King Jesus - shall lead now)
+
+[02:46] Yes, Lord Jesus our King lead the way 
+[02:51] (Lord King lead us)
+[02:53] Lead the way to a better day.
+`
+},
+
+{
+title:"War's End",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/WarsEnd- By GotSimon AlbumCover.jpg",
+audio:"audio/War's End @2026 SimonKoyounian.mp3",
+lyrics:`
+[00:21] The loud thunderous claps continue endlessly
+[00:31] And flashes of light hot -- hot --- like lightning melts iron and stone
+[00:42] Causing them to flow, --- sealing their home.
+
+[00:50] Filling hearts with powerless fright
+[00:55] Praying in hope to see the next daylight
+[01:00] Like shrieking banshees' sirens break the stillness of night
+[01:06] As children and mothers in shelters they huddle
+[01:11] Grasping each other they hold on tight
+
+[01:17] Do not despair oh you people today
+[01:21] The hour is coming for your liberation day
+[01:27] Erasing all war never more to appear
+[01:31] Because Christ Jesus, his God’s mighty power will display
+[01:38] Jehovah’s love will shelter you under his wings
+[01:46] Providing protection, removing war’s painful stings
+
+[01:56] Shattering the nations (like jars of clay)
+[02:01] Earth’s mighty warriors like dust will be swept away
+[02:08] Their wagon like tanks of warfare in fire he will burn
+[02:18] As missiles become like arrows missing their mark (missing their mark)
+[02:25] In Jesus’s mighty hands like dry twigs, they snap
+[02:32] Facing God’s Almighty power -- their courage will unwrap
+
+[02:41] Do not despair oh you people today
+[02:46] The hour is coming for your liberation to stay
+[02:52] Erasing all war never more to appear
+[02:56] When Christ Jesus, his God’s mighty power will display
+[03:03] Jehovah’s love will shelter you under his wings
+[03:11] Providing protection removing war’s painful stings
+
+[03:23] Thunderous sounds of war cries will cease
+[03:32] As Jehovah God’s champion will bring everlasting peace.
+[03:41] So, lovers of peace remember this promise today
+[03:52] Those resisting the King of Peace will perish away.
+`
+},
+
+
+{
+title:"Rainbow's Promise",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/Rainbow's Promise.jpg",
+audio:"audio/Rainbow's Promise - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:04] Dark clouds they break
+[00:09] Reveal a wondrous sight
+[00:15] The colours of the rainbow so bright
+[00:24] God’s eternal delight.
+
+[00:36] This is a story of a world long ago.
+[00:42] When an expanse between the waters did flow
+[00:48] The earth so beautiful to behold
+[00:54] A promised world ready to unfold
+
+[01:00] Becoming different causing God’s displeasure to show
+[01:06] The sons of the true God began to desire and become more bold
+[01:13] These daughters of men were beautiful to behold
+
+[01:26] Sons of God their heavenly appointments leave
+[01:31] Forsaking their place,
+[01:33] Their rebellion on earth, they continue to weave.
+[01:38] Taking human forms, those beings stood,
+[01:43] Choosing wives at will, breaking natural rules, they would.
+
+[01:53] Colours of the rainbow so bright to behold,
+[01:59] God’s covenant, his delight from old.
+[02:05] As a reminder, surrounding his throne
+[02:11] A covenant of peace after darkness the earth had known.
+[02:17] Never more will floodwaters erase a world
+
+[02:26] Noticing man’s wickedness was great
+[02:32] Their hearts and thoughts would deteriorate
+[02:37] Seeing the course, they choose to pursue
+[02:43] Righteous judgements they would ensue.
+
+[02:53] But Noah with God in righteousness he walked
+[02:59] His family with faith together they labored,
+[03:05] Building an ark, they were favored
+
+[03:16] The saving of their lives Jehovah God escape will make.
+[03:21] Trusting Noah, looking down from heaven.
+[03:27] Bringing to Noah animals in 2 or 7
+[03:33] Preparing to save God’s creatures from demise
+[03:39] For they were precious in God’s eye
+
+[03:46] The colours of the rainbow so bright
+[03:52] Remembering Noah’s love to do what’s right.
+[03:58] What's right in God’s sight
+`
+},
+
+{
+title:"Lack of Sight",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/LackOfSight.jpeg",
+audio:"audio/Lack of Sight - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:13] Darkness; warmth of night
+[00:19] As darkness envelopes my solitude
+[00:24] Thoughts echo in my mind
+[00:32] Waiting to understand the thing --
+
+[00:39] One moment in the darkness, I heard a voice so clear and distinct
+[00:49] Looking about I saw nothing in sight
+
+[00:57] The dark night was like a thick blanket covering my eyes
+[01:07] There was nothing but darkness and I felt no fright.
+[01:13] Again, I heard it but now I realized
+[01:23] There is a soft spot of light amid the darkness of night
+
+[01:37] “Who are you. Are you someone I know?”
+
+[01:50] “I am a friend who cares and loves you so.”
+[01:57] “Take my hand and let me guide your steps”
+
+[02:03] I reached out wanting to see where we would go.
+
+[02:17] Trusting in the warm love embracing me
+[02:23] I gazed about – Now I could see.
+[02:32] The blanket of black no longer covered me
+[02:40] Suddenly, I understood and realized, --- it was not night,
+[02:54] It was just my lack of sight.
+
+[03:00] No. it was not night ---
+[03:05] It. Was. My. Lack of sight…
+`
+},
+
+{
+title:"Looking For Trouble",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/Looking for Trouble.jpg",
+audio:"audio/Looking 4 Trouble -GotSimon @2026 SimonKoyounian.mp3",
+lyrics:`
+[00:00] Yeaaah!
+[00:09] Looking cute, so innocent, and free
+[00:14] A little ball of fur purring so loudly
+[00:17] Playful in spirit drawing you in
+[00:20] Getting ready to show -- --
+[00:23] The plans behind my eyes you do not know
+
+[00:26] Yeah! Looking for trouble – that's what I do
+[00:31] I’ll do as I please (oh) – it's nothing against you
+[00:35] My ways I can see yes clearly in view
+[00:39] Ohhhh, I’ll run circles (circles) around you!
+
+[00:52] Squinting eyes with approval, of you
+[00:57] Snuggling tightly rubbing myself against you
+[01:00] Guards are down you’re feeling good
+[01:04] Now my plan to reveal
+
+[01:07] Looking for trouble – that's what I do
+[01:12] I’ll do as I please – it's nothing against you
+[01:16] My ways I can see yes clearly in view
+[01:20] Ohhhh, I’ll run circles (circles) around you!
+
+[01:27] Looking for trouble – that's what I do
+[01:31] I’ll do as I please – it's nothing against you
+[01:35] My ways I can see yes clearly in view
+[01:39] Ohhhh, I’ll run circles (circles) around you!
+
+[01:44] meowwww
+`
+},
+
+{
+title:"God's Mercy",
+artist:"Simon Koyounian",
+thumbnail:"images/GodsMercy.jpg",
+audio:"audio/God's Mercy - By GotSimon ©Simon Koyounian.mp3",
+lyrics:`
+[00:00] Our Earth in anger it rages
+[00:04] Floods, tornadoes, fire and disease
+[00:11] Daily problems seem frequent as the breeze
+[00:18] Ever looking for hope amid the mountain peaks
+[00:26] Only to find valleys of deep shadows where sorrow speaks
+
+[00:34] In this time of the end where will you stand?
+[00:41] On the crucible or around the bend?
+[00:48] 2 roads there are available to choose
+[00:52] Narrow the way to God’s Mercy will show?
+[00:56] With our Lord Christ Jesus – God's mercy flows
+[01:03] And now will change our voice forever to rejoice.
+
+[01:12] umm um um um umme umm um um um umme umm um um um um um um um um um
+[01:20] umm um um um umme umm um um um umme um um um um um
+
+[01:26] Grain on the mountaintops overflow
+[01:29] No more will valleys of deep shadows give voice.
+[01:35] As deserts blossom and rejoice
+[01:40] Pleasant sayings like honeycomb will taste
+[01:44] As those in memorial tombs will rise
+
+[01:49] In this time of the end where will you stand?
+[01:56] On the crucible or around the bend?
+[02:03] 2 roads there are available to choose
+[02:07] Narrow the way to God’s Mercy will show?
+[02:11] With our Lord Christ Jesus – God's mercy flows
+[02:19] And now will change our voice forever to rejoice.
+
+[02:27] umm um um um umme umm um um um umme umm um um um um um um um um um
+[02:34] umm um um um umme umm um um um umme um um um um um
+
+[02:41] Narrow the way to God’s Mercy will show?
+[02:45] With our Lord Christ Jesus – God's mercy flows
+[02:48] And now will change our voice forever to rejoice.
+[02:57] Rejoice at heart - for Jehovah, his mercy will display.
+[03:09] will display ...
+[03:11] Rejoice at heart - for Jehovah, his mercy will display.
+[03:26] will display ...
+[03:30] everyday
+`
+},
+
+{
+title:"Step In Step",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/Step In Step.jpg",
+audio:"audio/Step in Step - By GotSimon.mp3",
+lyrics:`
+[00:17] The air is energized with an electric feel
+[00:21] Swaying to the beat – (the beat) that I feel
+[00:25] Hips and shoulders moving together we blend into one
+[00:29] Join me (yes join me) in our special song
+
+[00:34] Together united as the music pulses
+[00:38] Feeling the rhythm (the rhythm alive)
+[00:41] Step in step, with hips that sway leading the way
+[00:48] The energy we can't deny vibration fingertip to fingertips
+[00:56] Sound of music breaths taken away
+
+[01:04] How we yearn for the day
+[01:07] When we can dance step in step forever under the sun without care
+[01:13] Life will be fun and all will be free
+[01:16] Take my hand (my hand) and see
+
+[01:19] Together united as the music pulses
+[01:23] Feeling the rhythm as joyously we dance
+[01:27] Step in step, with hips that sway leading the way
+
+[01:34] Step in step – (stepping the way)
+[01:37] Feeling the electrifying joy as skirts flow and sway
+[01:42] Smiles and laughter – gleaming eyes reveal
+[01:46] Love in the air as we dance together
+[01:49] So – take my hand if you feel the rhythm
+[01:56] We’ll dance until the sun goes down
+
+[02:04] Together united as the music pulses
+[02:08] Feeling the rhythm the rhythm of love
+[02:12] Step in step, with hips that sway leading the way
+
+[02:19] Together united as the music pulses
+[02:23] Feeling the rhythm as joyously we dance
+[02:27] Step in step, with hips that sway leading the way.
+`
+},
+
+{
+title:"Final Judgement",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/FinalJudgement.jpeg",
+audio:"audio/Final Judgment - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:25] Look there on the horizon
+[00:30] Something comes with speed and might
+[00:34] The hour is well along into the night
+[00:41] Time is short for the need to act
+
+[00:52] Horizons begin to merge looming ever closer
+[00:57] Closer it thunders encompassing the night
+[01:01] A cluster of lightning fills the air as the tempest wind rushes through my hair.
+[01:11] Clasping tightly, I hold onto my treasure
+
+[01:20] Suddenly - all is quiet an Erie thing
+[01:25] The silence all around is deafening
+[01:29] My hand is numb with a slight tingling
+[01:24] Looking down I see my worldly treasures scattered all around
+
+[01:43] "Time is up!" Through the thunder a voice echoes so distinctly
+[01:52] "Oh. How many times I tried to warn you?”
+[02:00] “But deaf ears you gave choosing your course to pursue."
+[02:07] “Hardening your heart never listening to reason.”
+
+[02:19] With eyes opened wide, I now realized so clearly the leadings of my course
+[02:28] Still, I stood and thought about how to keep my treasure changing my destination
+[02:38] "Yes!", I thought - I know how to escape with good measure
+[02:46] Outstretched hands full of treasure - I offered my token for my ransom
+
+[03:00] Suddenly I realized it was not my treasures that were needed
+[03:07] No. Looking to these was not the answer
+[03:12] My ransom price was already freely offered
+[03:19] Blinded by materials I refused its value
+[03:27] Now I found that I was rejected no longer able to be accepted
+
+[03:37] Power left me as I started to stumble among my worthless treasures
+[03:46] Numbness - Darkness began to envelop me
+[03:55] Without a question I understood my payment
+[04:04] A deep never-ending sleep ---.
+`
+},
+
+{
+title:"Shadow of The Tower",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/ShadowOfTheTower.jpg" ,
+audio:"audio/Shadow of The Tower- GotSimon©2026 Simon Koyounian.mp3",
+lyrics:`
+[00:02] Beneath the shadow of the tower chaos bled
+[00:09] Nimrod, standing tall, defiance he would wed
+
+[00:16] Cush raised a boy, made of iron and stone,
+[00:19] Nimrod was fierce, making everything his own.
+[00:23] The heart of a rebel, a titan forged in blood,
+[00:26] Full of defiance; he will rise from brick and mud.
+
+[00:31] First of his kind, a hunter unchained,
+[00:37] Nimrod stood with fire in his eyes,
+[00:41] With thunder in his voice, he claimed the skies
+[00:44] Arrows in his hand and fury in his soul
+[00:50] He carved out a kingdom while lives he stole.
+
+[00:56] Just like Nimrod! A hunter, a beast,
+[00:59] He roamed with a dark heart on blood he would feast.
+[01:03] Building his towers at Babel he did begin,
+[01:06] Piercing the heavens - Jehovah he would deny,
+[01:12] Full of arrogance, he dared God to defy
+
+[01:16] whoa oh oh oh whoa oh oh oh whoa oh oh oh whoa oh oh oh
+[01:28] First King of cities his war cry of monstrous might,
+[01:31] Man and beast hunted down in the dead of night.
+[01:34] Killing for the thrill, he pursued with rage,
+[01:37] Conquering souls like trophies, a dark epic page
+
+[01:42] Soil soaked in red as he slept on his bed
+[01:48] His crown a jewel, carved not from love but fear instead
+[01:55] An empire of ash, built on the cries,
+[02:01] Of hearts once brave, but now, where hope dies.
+[02:07] A realm of the fallen, both far and near.
+
+[02:13] Just like Nimrod! A hunter, a beast,
+[02:16] He roamed with a dark heart on blood he would feast.
+[02:19] Building his towers at Babel did begin,
+[02:23] Piercing the heavens Jehovah he would deny,
+[02:29] Full of arrogance, he dared God to defy
+
+[02:32] Bring pain let it grow, bring pain let it grow, 
+[02:39] Bring pain let it grow, bring pain let it grow
+[02:43] Jehovah looked on, with anger and disdain,
+[02:50] Not approving of this man so vain,
+[02:56] Changing their language to scatter and break,
+[02:59] Nimrod's ambitious goal Jehovah would take.
+[03:02] Not understanding each word that they spoke,
+[03:05] Leaving behind the towers God’s wrath they did invoke
+
+[03:10] So remember the story of Nimrod, earth’s first king,
+[03:14] In shadows, a legend, a dark rebellious sting.
+[03:17] A mighty hunter, yes, but a throne made of sand,
+[03:20] In defiance of God, the price was so grand.
+[03:25] Woke up and then it's gone. woke up and then it's gone,
+[03:31] Woke up and then it's gone. woke up and then it's gone,
+[03:34] Woke up and then it's gone. woke up and then it's gone,
+`
+},
+
+{
+title:"Hope Found",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/Hope Found.jpg",
+audio:"audio/Hope Found_ By GotSimon©2026Simon Koyounian.mp3",
+lyrics:`
+[00:12] Whispers in the shadows, echoes from the past
+[00:18] A heart that learned to break, a future holding fast
+[00:25] Thinking this is not how love is meant to be
+[00:31] Curled in a ball of shattered pieces ready to flee
+
+[00:39] Where do dreams go when they fade away
+[00:42] Where do colours go when they turn to grey
+[00:46] Lessons learned too early innocence set at bay
+[00:52] Shadows creep in as daylight fades away
+
+[01:03] Scars too deep etched in the soul
+[01:09] Accepting that your peace it always stole
+[01:16] Wondering if ever there was another way
+[01:22] Believing that maybe hope will come one day
+
+[01:30] Counting the cracks in the ceiling above
+[01:33] Hoping for a miracle appearing like a dove
+[01:36] Listening in terror for creeks in the night
+[01:39] Eyes open widely as tears blur your sight
+
+[01:48] Scars too deep etched in the soul
+[01:54] Accepting that your peace it always stole
+[02:00] Wondering if ever there was another way
+[02:07] Believing that maybe hope will come one day
+
+[02:14] Hiding the pain of a fractured hope
+[02:20] Exposing yourself only when no one is nearby
+[02:27] Your pain happiness for you would deny
+[02:32] Dreams of peace and joy pushing everything away
+[02:38] Only to vanish with the new light of day
+
+[02:44] Breaking the bonds of anger and fear
+[02:49] Bravely looking for hope beyond the tear
+[02:56] Let God's arms open wide be your guide
+[03:01] As the darkness can be pushed aside
+[03:04] A time to heal is in sight.
+`
+},
+
+{
+title:"Invisible",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/Invisible.jpg",
+audio:"audio/Invisible - ver2 By GotSimon ©2026 Simon Koyounian.mp3",
+lyrics:`
+[00:01] Feeling trapped – there's no way out 
+[00:07] The darkness – numbness - conceals me.  
+[00:12] The person I am drowning deep inside. 
+[00:19] Why - why is it that you don’t truly see me at all? 
+[00:25] Hidden from your sight as if divided by a consuming wall. 
+[00:28] Though you refuse to see me, I was in it for the long haul. 
+[00:31] But oh - no more – no more will I sit silently by in the dark! 
+[00:38] Now is the time - these shackles MUST part!  
+
+[00:44] Where were you when I needed you the most? 
+[00:46] With my heart shattered, and emotions broke. 
+[00:49] Words escape trying to express my pain. 
+[00:53] Emotions swelling - like a flooding rain 
+[00:55] Ready to breach the bars that hold, hold, hold, hold, hold 
+ 
+[01:07] Broken in two - no longer is there room for you! 
+[01:13] Your place in my heart is a hole too deep. 
+[01:19] Looking for a bridge to heal why can't we find our way 
+[01:24] Groping in the darkness my hope vanishes away 
+[01:28] My gaping bleeding wounds I must heal -if my heart I will keep. 
+
+[01:35] Tell me now if you know! 
+[01:38] Why did you treat me so? 
+[01:41] Tell me! tell me – Nowww! 
+
+[01:47] Where were you when I needed you the most? 
+[01:49] With my heart shattered, and emotions broke. 
+[01:53] Words escape trying to express my pain. 
+[01:56] Emotions swelling - like a flooding rain 
+[01:59] Ready to breach the bars that hold, hold, hold, hold, hold
+
+[02:11] Now's the time for the change of the tide 
+[02:14] Letting go of this darkness I feel inside 
+[02:22] I am taking my step right into the light - leaving you behind. 
+[02:31] Now is my time to be seen – This is my voice heard. 
+[02:37] No! – no more will I stay! 
+[02:41] no more will I stay... 
+[02:44] INVISIBLE 
+[02:47] no more will I stay. 
+[02:50] no more, no, no, no, no, no 
+[02:56] Invisible
+[02:58] no, no, no, no, no, no, no, no, no, no,
+[03:04] no, no, no, no, no more.
+`
+},
+
+{
+title:"Poisoned Thorns",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/PoisonedThorns.jpeg",
+audio:"audio/Poisoned Thorns -2- ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:05] mmh, uh, uh, uh - uh - 
+[00:14] Walking freely under the huge wise tree
+[00:20] Surrounded by everything pleasant and free
+[00:26] A tender wind spreads the scent of flowers
+[00:31] Eden is the garden of love and peaceful hours.
+
+[00:38] Beneath the branches, shadows start to creep,
+[00:42] The serpent waits where secrets lie deep.
+[00:45] In dark shadows, it hides from site
+[00:47] Wanting to give its venomous bite
+[00:51] Whispers of charm, a mask to deceive,
+[00:54] Promising joy, but leading to grief.
+
+[00:57] The truth will set you free, don’t you see?
+[01:00] Take the fruit and you will be free
+[01:04] Independence you can take
+[01:07] Good and bad choices you will make
+
+[01:10] ohh oh oh oh (ooh, ooh, ooh) ohh oh oh oh (ooh, ooh, ooh) ohh oh oh oh 
+
+[01:22] Taking the fruit your own truth you would choose
+[01:26] Only to find a rose with poisoned thorns
+[01:29] Darkness envelopes the light of life
+[01:32] Finding misery and strife
+[01:36] No longer endless days will you see
+
+[01:41] Wearing a mask of charm concealing corruption
+[01:45] The serpent it’s plan it did reveal
+[01:48] Always ready God’s worship to steal
+[01:50] Leading man to death and ruin
+[01:54] God’s friendship he did bring disruption
+
+[01:57] Taking the fruit your own truth you did seek
+[02:01] Only to find a rose with poisoned thorns
+[02:03] Darkness envelopes the light of life
+[02:07] Only find misery and strife
+[02:11] No longer endless days will you see
+
+[02:16] Praise be to God life by him you can see
+[02:28] Christ his life he did open the way to be truly free
+[02:41] Free today and for eternity
+[02:49] Christ his life he did open the way to be truly free
+[03:02] Free today and for eternity
+[03:10] music
+`
+},
+
+{
+title:"Our Beautiful Planet",
+artist:"GotSimon ©2025 Simon Koyounian",
+thumbnail:"images/OurBeautifulPlanet.jpg",
+audio:"audio/Our Beautiful Planet - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:13] Sitting on a ridge - the valley below
+[00:17] Blue sky above as fluffy clouds float by
+[00:23] Ooh birds they are singing amid the green pines
+[00:27] Gazing upon the mountain ridge lines, I wonder why -
+[00:34] Why people take for granted - (Yes, for granted) - our beautiful planet
+
+[00:52] Looking around, all feels fine.
+[00:54] My world free of trouble and strife
+[00:57] A last chug I enjoy my drink so refreshing
+[01:02] Without any care, my can I toss away
+[01:06] As tiny little bees make sounds in the breeze
+
+[01:13] How much time has passed, (I do not know)
+[01:18] Looking around the beauty surrounding me – I see - ohh I see
+[01:24] Something amid the trees sparkles so
+[01:26] What could it be? I need to know!
+
+[01:31] Can you tell me why this is so
+[01:34] Our planet we poison behaving like a contagion
+[01:38] Never giving a chance for life to grow
+[01:42] The things we hold dearly we seem to destroy
+[01:47] Our beautiful planet - that brings us much joy?
+[01:57] Brings us much joy Brings us much joy
+
+[02:05] Squirrels they run and play about  
+[02:08] As tiny little bees make sounds in the breeze 
+[02:15] Climbing down the cliff, seeking to find this thing 
+[02:20] This curious thing - that sparkles so brightly in the sunlight. 
+
+[02:28] Searching for something to hold! 
+[02:32] Finding a crack amid the rocks desperate with hope! 
+[02:38] The sun again reflected its light 
+[02:41] Amid the trees it stood out so clear (no longer a curiosity)  
+[02:47] Seeing it clearly my can I threw now stared back at me 
+
+[02:51] Can you tell me why this is so -  
+[02:54] Our planet we poison behaving like a contagion 
+[02:58] Never giving a chance for life to grow 
+[03:02] The things we hold dearly we seem to destroy 
+[03:08] Our beautiful planet - that brings us much joy? 
+[03:17] Brings us much joy, brings us much joy 
+
+[03:25] Squirrels they run and play about  
+[03:28] As tiny little bees - - make sounds in the breeze 
+[03:49] Tiny little bees make sounds in the breeze. 
+`
+},
+
+{
+title:"Winter Breeze",
+artist:"Simon Koyounian",
+thumbnail:"images/WinterBreeze.jpeg",
+audio:"audio/Winter Breeze - ©2025 Simon Koyounian.mp3",
+lyrics:`
+[00:03] Ohhh ohhh Ohhh ohhh,
+[00:10] Do you remember?
+[00:15] Do you remember the love?
+[00:19] The love you had at first?
+[00:27] Do you remember when we first met?
+[00:31] I said hello, and you responded
+[00:37] As your love began to deepen and grow.
+[00:42] Your eyes would shine brightly thinking about me each day.
+[00:49] Not taking for granted what I had to say.
+
+[00:55] To all the friends that you met through the day.
+[01:02] You told them about the joy and love we shared.
+
+
+[01:11] What has happened dare I ask?
+[01:15] To the love you first had?
+[01:18] Watching as it fades to former days long past
+[01:25] Like autumn leaves raising their anchor.
+[01:29] Tossing about among the trees with the winter breeze.
+
+[01:42] Joyfully we spoke for hours into late nights each and every single day
+[01:51] And when people listened to our stories shared
+[01:56] Your heart swelled talking about the love that we share.
+[02:00] As your love excelled through time, nothing could stand in our way.
+[02:10] No nothing ever said or done, would make your love for me sway.
+
+[02:20] What has happened dare I ask?
+[02:22] To the love you first had?
+[02:26] Watching as it fades to former days long past
+[02:33] Like autumn leaves raising their anchor.
+[02:38] Tossing about among the trees with the winter breeze.
+
+[02:47] Loving ever deeper a vow we did share!
+[02:54] Never ever would I leave you but continue to show loving care
+[03:01] You vowed to stand beside me forever united with promises to keep
+[03:07] But as autumn's leaves descend upon you
+[03:14] The tides of summer joy seemingly begin to fade
+[03:21] Forgetting the warmth of love you once openly declared.
+
+[03:31] What has happened dare I ask?
+[03:35] To the love you first had?
+[03:38] Watching as it fades to former days long past
+[03:45] Like autumn leaves raising their anchor.
+[03:49] Tossing about among the trees with the winter breeze.
+
+[03:59] My heart, it pains to see the cold winter breeze.
+[04:08] Cooling your feelings that used to burn like a fiery hot blaze
+[04:17] Only to become warm embers in its place.
+
+[04:27] What has happened dare I ask?
+[04:31] To the love you first had?
+[04:34] Watching as it fades to former days long past
+[04:41] Like autumn leaves raising their anchor.
+[04:46] Tossing about among the trees with the winter breeze.
+
+[04:55] What has happened dare I ask?
+[04:59] To the love you first had?,
+
+[05:05] Steadily, I will keep my vow.
+[05:10] A promise to you I have made.
+[05:15] I will continue waiting on your joyous return.
+[05:25] Before the end of days.
+`
+},
+
+];
+
+/* =====================================================
+GLOBAL
+===================================================== */
+
+const playlist=document.getElementById("playlist");
+const player=document.getElementById("player");
+const wave=document.getElementById("waveProgress");
+
+let current=0;
+let lyricsLines=[];
+
+/* =====================================================
+BUILD PLAYLIST
+===================================================== */
+
+songs.forEach((s,i)=>{
+
+let card=document.createElement("div");
+card.className="song-card";
+card.id="song"+i;
+
+card.innerHTML=`
+
+<img src="${s.thumb}" class="song-thumb">
+
+<div>
+<h3>${s.title}</h3>
+
+<button onclick="playSong(${i})">Play</button>
+<button onclick="shareSong(${i})">Share</button>
+<button onclick="shareTime(${i})">Time</button>
+
+<div class="lyrics" id="lyrics${i}"></div>
+
+</div>
+`;
+
+playlist.appendChild(card);
+
+/* dropdown */
+let opt=document.createElement("option");
+opt.value=i;
+opt.textContent=s.title;
+songList.appendChild(opt);
+
+/* build lyrics */
+buildLyrics(s,i);
+
+});
+
+/* =====================================================
+PLAY SONG (HLS SUPPORT)
+===================================================== */
+
+function playSong(i){
+
+current=i;
+
+/* HLS streaming */
+if(Hls.isSupported()){
+let hls=new Hls();
+hls.loadSource(songs[i].file);
+hls.attachMedia(player);
+}else{
+player.src=songs[i].file;
+}
+
+player.play();
+
+lyricsLines=document.querySelectorAll("#lyrics"+i+" .lyric-line");
+
+/* center card */
+document.getElementById("song"+i).scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+}
+
+/* =====================================================
+AUTO NEXT SONG
+===================================================== */
+
+player.addEventListener("ended",()=>{
+if(current+1<songs.length) playSong(current+1);
+});
+
+/* =====================================================
+WAVEFORM PROGRESS
+===================================================== */
+
+player.addEventListener("timeupdate",()=>{
+
+let percent=(player.currentTime/player.duration)*100;
+wave.style.width=percent+"%";
+
+});
+
+/* =====================================================
+LYRICS BUILD + SYNC
+===================================================== */
+
+function buildLyrics(song,i){
+
+let container=document.getElementById("lyrics"+i);
+
+song.lyrics.trim().split("\n").forEach(line=>{
+
+let m=line.match(/\[(.*?)\](.*)/);
+if(!m)return;
+
+let div=document.createElement("div");
+
+div.className="lyric-line";
+div.dataset.time=convert(m[1]);
+div.textContent=m[2];
+
+container.appendChild(div);
+
+});
+
+}
+
+player.addEventListener("timeupdate",()=>{
+
+let t=player.currentTime;
+
+lyricsLines.forEach(l=>{
+
+if(t>=l.dataset.time){
+
+document.querySelectorAll(".lyric-line")
+.forEach(x=>x.classList.remove("active"));
+
+l.classList.add("active");
+
+l.parentElement.scrollTo({
+top:l.offsetTop-l.parentElement.clientHeight/2,
+behavior:"smooth"
+});
+
+}
+
+});
+
+});
+
+/* =====================================================
+SEARCH
+===================================================== */
+
+searchBar.oninput=e=>{
+let term=e.target.value.toLowerCase();
+
+document.querySelectorAll(".song-card").forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(term)?"flex":"none";
+});
+};
+
+/* =====================================================
+JUMP
+===================================================== */
+
+songList.onchange=()=>{
+let i=parseInt(songList.value);
+if(!isNaN(i)) playSong(i);
+};
+
+/* =====================================================
+SHARE
+===================================================== */
+
+function shareSong(i){
+let url=location.href.split("?")[0]+"?song="+i;
+navigator.clipboard.writeText(url);
+alert("Link copied");
+}
+
+function shareTime(i){
+let url=location.href.split("?")[0]+"?song="+i+"&t="+Math.floor(player.currentTime);
+navigator.clipboard.writeText(url);
+alert("Timestamp copied");
+}
+
+/* =====================================================
+SWIPE (MOBILE)
+===================================================== */
+
+let startX=0;
+
+document.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX;
+});
+
+document.addEventListener("touchend",e=>{
+
+let endX=e.changedTouches[0].clientX;
+
+if(endX-startX>50 && current>0) playSong(current-1);
+if(startX-endX>50 && current<songs.length-1) playSong(current+1);
+
+});
+
+/* =====================================================
+TIME CONVERSION
+===================================================== */
+
+function convert(t){
+let p=t.split(":");
+return parseInt(p[0])*60+parseFloat(p[1]);
+}
+
+</script>
+
+</body>
+</html>
