@@ -114,6 +114,10 @@ The Power of Love <span style="color:#05d8fd">|</span>
 </section>
 
 <footer>
+<div id="visitorCounter">
+    Visitors: Loading...
+</div>
+
 © 2025 Simon Koyounian — Independent Music
 </footer>
 
@@ -1907,5 +1911,46 @@ ANCHOR FOR NEXT PAGE
     <p style="text-align:center; color:#00c3ff">1. <a href="index2.html"> 2.</a></p>
 </section>
 -->
+
+<script>
+
+/* =====================================================
+UNIQUE DAILY VISITOR COUNTER
+Counts a visitor once per day per browser.
+===================================================== */
+
+const namespace = "gotsimon_music";
+const key = "homepage";
+
+const today = new Date().toISOString().slice(0,10);
+
+if(localStorage.getItem("visitorCountDate") !== today){
+
+    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById("visitorCounter").innerHTML =
+            "Visitors: " + data.value.toLocaleString();
+
+    });
+
+    localStorage.setItem("visitorCountDate", today);
+
+}
+else{
+
+    fetch(`https://api.countapi.xyz/get/${namespace}/${key}`)
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById("visitorCounter").innerHTML =
+            "Visitors: " + data.value.toLocaleString();
+
+    });
+
+}
+
+</script>
 </body>
 </html>

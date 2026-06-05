@@ -195,4 +195,12 @@ footer{
     color:var(--muted);
 }
 
+/* VISITOR COUNTER */
+#visitorCounter{
+    text-align:center;
+    margin-top:15px;
+    color:#3ab0ff;
+    font-size:14px;
+}
+
 </style>
