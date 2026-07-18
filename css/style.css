@@ -1,5 +1,3 @@
-<style>
-
 <!-- =========================================================
      POLISHED DARK THEME STYLES
      Edit colors in :root to change site palette
@@ -203,4 +201,19 @@ footer{
     font-size:14px;
 }
 
-</style>
+/* =====================================================
+TOTAL SONG COUNTER
+===================================================== */
+
+.site-stats{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    color:#3ab0ff;
+    text-shadow:0 0 10px rgba(58,176,255,.45);
+}
+#songCount{
+    color:#f8f4f4;
+    font-size:30px;
+    margin-right:8px;
+}

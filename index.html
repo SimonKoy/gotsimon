@@ -51,6 +51,7 @@ Each piece reflects themes of faith, reflection, love, and restoration.
 </div>
 </section>
 
+
 <!-- =========================================================
      CONTACT SECTION
      Replace email or add links as desired
@@ -58,7 +59,19 @@ Each piece reflects themes of faith, reflection, love, and restoration.
 <section>
 <div class="card contact">
 <h2>Contact</h2>
-<p>Email: <a href="mailto:sk030362@gmail.com">sk030362@gmail.com</a></p>
+<!-- =============================
+ HIDE EMAIL FROM ROBOTS-->
+
+<SCRIPT TYPE="text/javascript">
+  emailE = 'rogers.com'
+  emailE = ('simonkoy' + '@' + emailE)
+  document.write('<A href="mailto:' + emailE + '">' + emailE + '</a>')
+</script>
+<NOSCRIPT>
+  Email address protected by JavaScript
+</NOSCRIPT>
+
+<!-- <p>Email: <a href="mailto:simonkoy@rogers.com">sk030362@gmail.com</a></p> -->
 <p>All songs © 2026 Simon Koyounian. All rights reserved.</p>
 </div>
 </section>
@@ -84,30 +97,34 @@ Lazarus <span style="color:#05d8fd">|</span>
 As Long As You Live <span style="color:#05d8fd">|</span>
 <br><br>
 Victory Song <span style="color:#05d8fd">|</span>
-Loves Path <span style="color:#05d8fd">|</span>
-God's Mercy <span style="color:#05d8fd">|</span>
-Love's Path <span style="color:#05d8fd">|</span>
 The Onion of Us <span style="color:#05d8fd">|</span>
+Love's Path <span style="color:#05d8fd">|</span>
 Morning Star <span style="color:#05d8fd">|</span>
 Do You Remember? <span style="color:#05d8fd">|</span>
-New Age <span style="color:#05d8fd">|</span>
-<br><br>
-Seeking Your Light <span style="color:#05d8fd">|</span>
 Where Is Your Line? <span style="color:#05d8fd">|</span>
-A Better Tomorrow <span style="color:#05d8fd">|</span>
 Crimson Red <span style="color:#05d8fd">|</span>
+<br><br>
 Words of Life <span style="color:#05d8fd">|</span>
 Goliath <span style="color:#05d8fd">|</span>
 Clearly Seen <span style="color:#05d8fd">|</span>
-<br><br>
-The Onion of Us - version 2 <span style="color:#05d8fd">|</span>
+The Onion of Us-version 2 <span style="color:#05d8fd">|</span>
 The Power of Love <span style="color:#05d8fd">|</span>
 The Stream <span style="color:#05d8fd">|</span>
+Life's Book <span style="color:#05d8fd">|</span>
 <br>
 <br>
 <span style="color:#737274">return for more content</span>
 </p>
 </div>
+
+   <!-- =====================================================
+TOTAL SONG COUNT
+Displays the total number of songs automatically.
+===================================================== -->
+<div class="site-stats">
+    <span id="songCount">0</span>
+    Original Songs Available
+</div> 
 </section>
 
 <!-- =========================================================
@@ -148,6 +165,47 @@ let playlistStarted = false;
 const songs = [
 
 /* NEW SONG AT TOP ###################################*/
+{
+title:"Lifes's Book",
+artist:"GotSimon ©2026 Simon Koyounian",
+thumbnail:"images/lifes-book.jpg",
+audio:"audio/Life's Book - ver III - By GotSimon -©2026 Simon Koyounian.mp3",
+lyrics:`
+[00:11] If the story moved ahead, with no chance to rewind,
+[00:18] You’d savor every chapter, every sentence you could find.
+[00:24] The end of the story you cannot see, as blank pages unfurl
+[00:32] Would you simply quit or search for hidden pearls?
+
+[00:44] Life is our book with pages unwritten
+[00:47] Each moment we take fitting like a mitten.
+[00:50] Decisions made will be history written.
+[00:54] Yes, how will you feel when your book is read
+[01:03] By those around us seeing us in times ahead
+
+[01:12] Take the time to see tomorrows
+[01:18] Possibilities grand and full of no sorrows
+[01:24] A name we make for all to read breaking our mold
+[01:30] Our -- future is ours to behold, ooh oooh
+
+[01:45] Errors forgiven and joy filling our heart
+[01:49] Are you able to see your part?
+[01:53] Beginning chapters new to see
+[01:57] Leaving behind the pages because we have been set free
+
+[02:06] Take the time to see tomorrows -- ohh ohh ohh ohh
+[02:13] Possibilities grand and full of no sorrows
+[02:19] A name we make for all to read breaking our mold
+[02:25] Our future is ours to behold
+
+[02:37] ohh, oh oh oh ohh
+[02:44] ohh, ohh
+[02:47] Regrets from pasts no longer linger, oooh oooh oooh ooh
+[02:54] Feeling life, our story continues ohh
+[02:59] Turning -- pages forever will be
+[03:06] Possibilities grand into infinity.
+`
+},
+
 {
 title:"The Stream",
 artist:"GotSimon ©2026 Simon Koyounian",
@@ -317,9 +375,6 @@ lyrics:`
 `
 },
 
-
-
-
 {
 title:"Clearly Seen",
 artist:"GotSimon ©2026 Simon Koyounian",
@@ -463,7 +518,6 @@ lyrics:`
 [03:08] Love is the source of all life in Jehovah’s gracious -- hand.
 `
 },
-
 
 {
 title:"Crimson Red",
@@ -620,7 +674,6 @@ lyrics:`
 "[03:32] Oh, oh (oh, oh, oh) oh, oh, oh, oh, (Oh, oh, oh,) praise oh, Oh, oh, oh"
 `
 },
-
 
 {
 title:"Morning Star",
@@ -1069,7 +1122,6 @@ lyrics:`
 [03:52] Those resisting the King of Peace will perish away.
 `
 },
-
 
 {
 title:"Rainbow's Promise",
@@ -1620,7 +1672,6 @@ lyrics:`
 [00:55] To all the friends that you met through the day.
 [01:02] You told them about the joy and love we shared.
 
-
 [01:11] What has happened dare I ask?
 [01:15] To the love you first had?
 [01:18] Watching as it fades to former days long past
@@ -1671,8 +1722,15 @@ lyrics:`
 [05:25] Before the end of days.
 `
 },
-
 ];
+console.log("Number of songs:", songs.length);
+/* =====================================================
+DISPLAY TOTAL NUMBER OF SONGS
+Automatically updates whenever songs are added.
+===================================================== */
+
+document.getElementById("songCount").textContent = songs.length;
+
 
 /* =========================================================
    BUILD PLAYLIST
