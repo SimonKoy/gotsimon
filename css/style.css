@@ -49,6 +49,86 @@ html {
 scroll-behavior: smooth;
 }
 
+/* =====================================================
+FEATURED SONG HERO
+===================================================== */
+
+/* Wrapper ensures spacing above search bar */
+.featured-wrapper {
+  width: 100%;
+  margin-bottom: 25px; /* same spacing as your cards */
+}
+
+/* Main card container — glassmorphism style */
+.featured-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  /* Your site’s signature frosted-glass look */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+
+  padding: 20px;
+  border-radius: 14px; /* same radius as your song cards */
+
+  transition: transform 0.2s ease;
+}
+
+/* Hover scale effect identical to your site */
+.featured-card:hover {
+  transform: scale(1.02);
+}
+
+/* Thumbnail image */
+.featured-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px; /* matches your rounded covers */
+  object-fit: cover;
+}
+
+/* Right-side text container */
+.featured-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Small label above title */
+.featured-label {
+  font-size: 0.9rem;
+  opacity: 0.7; /* same subtle fade */
+  margin-bottom: 4px;
+}
+
+/* Song title */
+.featured-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* Play/Pause button */
+.featured-btn {
+  background: rgba(255, 255, 255, 0.2); /* semi-transparent white */
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+
+  transition: background 0.2s ease;
+}
+
+/* Hover effect */
+.featured-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+
+
 
 body::after{
     content:"© 2025-2026 Simon Koyounian — All Rights Reserved";
@@ -56,6 +136,7 @@ body::after{
     bottom:10px;
     right:10px;
     font-size:15px;
+    color: #ccb3f5;
     opacity:0.4;
 }
 
@@ -197,7 +278,7 @@ footer{
 #visitorCounter{
     text-align:center;
     margin-top:15px;
-    color:#3ab0ff;
+    color:#f83aff;
     font-size:14px;
 }
 
@@ -209,11 +290,11 @@ TOTAL SONG COUNTER
     margin-top:20px;
     font-size:18px;
     font-weight:bold;
-    color:#3ab0ff;
+    color:#f83aff;
     text-shadow:0 0 10px rgba(58,176,255,.45);
 }
 #songCount{
-    color:#f8f4f4;
+    color:#9bb1e0;
     font-size:30px;
     margin-right:8px;
 }
