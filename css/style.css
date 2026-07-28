@@ -49,84 +49,106 @@ html {
 scroll-behavior: smooth;
 }
 
-/* =====================================================
-FEATURED SONG HERO
-===================================================== */
+/* =========================================================
+   FEATURED HERO SONG
+========================================================= */
 
-/* Wrapper ensures spacing above search bar */
-.featured-wrapper {
-  width: 100%;
-  margin-bottom: 25px; /* same spacing as your cards */
+.featured-hero {
+    width:100%;
+    padding:25px 15px;
 }
 
-/* Main card container — glassmorphism style */
-.featured-card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  /* Your site’s signature frosted-glass look */
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-
-  padding: 20px;
-  border-radius: 14px; /* same radius as your song cards */
-
-  transition: transform 0.2s ease;
+.hero-card {
+    max-width:850px;
+    margin:430px auto;
+    margin:auto;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:30px;
+    border-radius:20px;
+    background:rgba(20,20,40,0.85);
+    box-shadow:0 0 25px rgba(58,176,255,0.35);
+    
 }
 
-/* Hover scale effect identical to your site */
-.featured-card:hover {
-  transform: scale(1.02);
+.hero-image img {
+    width:170px;
+    height:170px;
+    object-fit:cover;
+    border-radius:12px;
 }
 
-/* Thumbnail image */
-.featured-img {
-  width: 90px;
-  height: 90px;
-  border-radius: 12px; /* matches your rounded covers */
-  object-fit: cover;
+
+
+.hero-content {
+    flex:1;
+    color:white;
 }
 
-/* Right-side text container */
-.featured-info {
-  display: flex;
-  flex-direction: column;
+.hero-content h1 {
+    color:#3ab0ff;
+    font-size:28px;
+    margin-bottom:10px;
 }
 
-/* Small label above title */
-.featured-label {
-  font-size: 0.9rem;
-  opacity: 0.7; /* same subtle fade */
-  margin-bottom: 4px;
+.hero-content h3 {
+    color:#b58cff;
 }
 
-/* Song title */
-.featured-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 14px;
+.hero-content p {
+    font-size:15px;
+    line-height:1.6;
 }
 
-/* Play/Pause button */
-.featured-btn {
-  background: rgba(255, 255, 255, 0.2); /* semi-transparent white */
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-
-  cursor: pointer;
-  color: white;
-  font-size: 1rem;
-
-  transition: background 0.2s ease;
+.hero-content audio {
+    width:100%;
+    height:36px;
+    margin-top:15px;
 }
 
-/* Hover effect */
-.featured-btn:hover {
-  background: rgba(255, 255, 255, 0.35);
+.hero-content button {
+    margin-top:15px;
+    padding:8px 18px;
+    font-size:14px;px;
+    border:none;
+    border-radius:20px;
+    background:#3ab0ff;
+    color:white;
+    cursor:pointer;
 }
 
+.hero-content button:hover {
+    background:#7b5cff;
+}
+
+
+/* =========================================================
+   MOBILE RESPONSIVE
+========================================================= */
+
+@media(max-width:768px){
+
+    .hero-card {
+        flex-direction:column;
+        text-align:center;
+        padding:20px;
+    }
+
+    .hero-image img {
+        width:180px;
+        height:180px;
+    }
+
+    .hero-content h1 {
+        font-size:26px;
+    }
+
+    .hero-content audio {
+        width:100%;
+    }
+
+}
 
 
 
@@ -233,15 +255,7 @@ LYRIC EFFECT
     line-height:1.6;
 }
 
-/*
-.lyric-line {
-    opacity: 0.35;
-    transform: scale(0.98);
-    transition: 
-        opacity 0.5s ease,
-        transform 0.4s ease,
-        color 0.4s ease;
-}  */
+
   .lyric-line {
     opacity: 0.35;
     transform: scale(0.98);
@@ -254,7 +268,7 @@ LYRIC EFFECT
 
 .lyric-line.active {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.35);
     color: #00c3ff;
    text-shadow: 0 0 10px #00c3ff;
 }
@@ -297,4 +311,44 @@ TOTAL SONG COUNTER
     color:#9bb1e0;
     font-size:30px;
     margin-right:8px;
+}
+
+
+/* ===============================
+FEATURED LYRICS BOX 
+==================================*/
+/* Featured Lyrics */
+
+.lyrics-box{
+    max-width:600px;
+    margin:40px auto;
+    padding:15px;
+    background:#181828;
+    border-radius:15px;
+}
+
+#lyricsContainer{
+    height:75px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+    padding-top:100px;
+    padding-bottom:120px;
+}
+
+.lyric{
+
+    font-size:15px;
+    line-height:1.6;
+    color:#999;
+    padding:6px 0;
+    transition:.25s;
+}
+
+.lyric.active{
+
+    font-size:17px;
+    font-weight:bold;
+    color:#3ab0ff;
+    text-shadow:0 0 8px #3ab0ff;
 }
